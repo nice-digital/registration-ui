@@ -1,7 +1,32 @@
 import Head from 'next/head'
+import Link from 'next/link'
+
 import styles from '../styles/Home.module.css'
 
+import useApi from '../lib/use-api';
+
+import { useUser } from '@auth0/nextjs-auth0';
+
+type UserProfile = {
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+}
+
 export default function Home() {
+
+  let { user, error, isLoading } = useUser();
+  let userDetails : UserProfile = { firstName: "", lastName: "", emailAddress: ""};
+
+  console.log(JSON.stringify(user));
+    console.log("about to hit the api");
+    
+    const { response, profileError, profileIsLoading } = useApi('/api/userprofile');
+
+    console.log(`response: ${JSON.stringify(response)}`);
+
+    userDetails = response;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,45 +36,46 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        
+        {(user && userDetails) ? <div>Welcome {user.name}! <Link href="/api/auth/logout">Logout</Link></div> : <Link href="/api/auth/login">Login</Link>}
+  
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Idam profile site.
         </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+  
+        {(user && userDetails) ?
+  
+          <div className={styles.grid}>
+            <div className={styles.card}>
+              <label>Firstname&nbsp;
+                <input type="text" value={userDetails.firstName} />
+              </label>            
+            </div>
+  
+            <div className={styles.card}>
+              <label>Lastname&nbsp;
+                <input type="text" value={userDetails.lastName} />
+              </label>            
+            </div>
+  
+            <div className={styles.card}>
+              <label>Email&nbsp;
+                <input type="text" value={userDetails.emailAddress} />
+              </label>            
+            </div>
+  
+            <div className={styles.card}>            
+                <button>Update</button>            
+            </div>          
+          </div>
+  
+        :
+  
+          <p className={styles.description}></p>
+  
+        }
+  
+        </main>
 
       <footer className={styles.footer}>
         <a
