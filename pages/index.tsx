@@ -40,7 +40,7 @@ export default function Home() {
         {(user && userDetails) ? <div>Welcome {user.name}! <Link href="/api/auth/logout">Logout</Link></div> : <Link href="/api/auth/login">Login</Link>}
   
         <h1 className={styles.title}>
-          Idam profile site.
+          Idam profile site
         </h1>
   
         {(user && userDetails) ?
