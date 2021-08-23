@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "title": "CG187: Acute heart failure: diagnosis and management",
+        "dateSubmitted": "2020-10-27",
+        "status": "Active"
+    },
+    {
+        "id": 2,
+        "title": "TA679: Chronic heart failure with reduced ejection fraction",
+        "dateSubmitted": "2020-09-15",
+        "status": "Rejected"
+    },
+    {
+        "id": 3,
+        "title": "IPG694: Permanent His-bundle pacemaker implantation for treating heart failure",
+        "dateSubmitted": "2020-06-27",
+        "status": "Active"
+    },
+    {
+        "id": 4,
+        "title": "GID-NG10097: Subarachnoid haemorrhage due to ruptured aneurysms",
+        "dateSubmitted": "2020-08-27",
+        "status": "Pending"
+    }
+]
