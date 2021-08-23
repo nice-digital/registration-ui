@@ -1,13 +1,25 @@
+import { useState, useEffect } from 'react'
+
 import Layout from '../components/layout';
 
 import { PageHeader } from "@nice-digital/nds-page-header";
 import { Table } from "@nice-digital/nds-table";
 import { Button } from "@nice-digital/nds-button";
 
-import registrations from "../lib/registrations.json";
-// import useApi from '../lib/use-api';
+import useApi from '../lib/use-api';
+
+import { Registration } from "../lib/types";
+
 
 export default function Registrations() {
+    const [registrations, setRegistrations] = useState<Array<Registration>>([])
+
+    const { response } : { response: Array<Registration> }  = useApi('/api/getRegistrations'); 
+
+    useEffect(() => {
+        setRegistrations(response);
+      }, [response]);
+
 
     const handleCancelClick = (id: number) => {
         console.log(id);
@@ -23,8 +35,8 @@ export default function Registrations() {
                     <th>Status</th>
                     <th></th>
                 </tr>
-                {registrations.map((registration: any) => (
-                    <tr>
+                {registrations && registrations.map((registration: Registration) => (
+                    <tr key={registration.id}>
                         <td>{registration.dateSubmitted}</td>
                         <td>{registration.title}</td>
                         <td>{registration.status}</td>

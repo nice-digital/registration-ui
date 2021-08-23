@@ -37,7 +37,13 @@ export default function Home() {
 
       <main className={styles.main}>
         
-        {(user && userDetails) ? <div>Welcome {user.name}! <Link href="/api/auth/logout">Logout</Link></div> : <Link href="/api/auth/login">Login</Link>}
+        {(user && userDetails) ? 
+          (
+            <>
+            <div>Welcome {user.name}! <Link href="/api/auth/logout">Logout</Link></div>
+            <div>View your registrations: <Link href="/registrations">My registrations</Link></div>
+            </>
+          ) : <Link href="/api/auth/login">Login</Link>}
   
         <h1 className={styles.title}>
           Idam profile site
