@@ -46,7 +46,7 @@ export default function Home() {
           ) : <Link href="/api/auth/login">Login</Link>}
   
         <h1 className={styles.title}>
-          Idam profile site
+          Stakeholder reg site
         </h1>
   
         {(user && userDetails) ?

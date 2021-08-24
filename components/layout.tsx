@@ -4,8 +4,8 @@ import { Container } from "@nice-digital/nds-container";
 export default function Layout({ children }: any) {
     const auth: IdamProviderProps = {
 		links: [
-			{ text: "Health checks", url: "/healthchecks-ui" },
-			{ text: "Sign out", url: "/Account/Logout" },
+			{ text: "My registrations", url: "/registrations" },
+			{ text: "Sign out", url: "/api/auth/logout" },
 		],
 		displayName: "John",
 		provider: "idam",
