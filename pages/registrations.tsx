@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 import Layout from '../components/layout';
 
@@ -6,20 +6,19 @@ import { PageHeader } from "@nice-digital/nds-page-header";
 import { Table } from "@nice-digital/nds-table";
 import { Button } from "@nice-digital/nds-button";
 
-import useApi from '../lib/use-api';
-
 import { Registration } from "../lib/types";
 
+import { fetchData } from "../lib/helpers";
 
-export default function Registrations() {
-    const [registrations, setRegistrations] = useState<Array<Registration>>([])
+  export const getServerSideProps = withPageAuthRequired({
+      async getServerSideProps(context){
+        return {
+            props: { registrations: await fetchData(context, '/api/getRegistrations')}
+        }
+      }
+  });
 
-    const { response } : { response: Array<Registration> }  = useApi('/api/getRegistrations'); 
-
-    useEffect(() => {
-        setRegistrations(response);
-      }, [response]);
-
+export default function Registrations({registrations} : {registrations: Array<Registration>}) {
 
     const handleCancelClick = (id: number) => {
         console.log(id);
@@ -35,7 +34,7 @@ export default function Registrations() {
                     <th>Status</th>
                     <th></th>
                 </tr>
-                {registrations && registrations.map((registration: Registration) => (
+                {registrations && Array.isArray(registrations) && registrations.map((registration: Registration) => (
                     <tr key={registration.id}>
                         <td>{registration.dateSubmitted}</td>
                         <td>{registration.title}</td>
