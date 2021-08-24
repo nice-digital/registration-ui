@@ -53,3 +53,7 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 #amplify-do-not-edit-end
+
+# Visual Studio 2015 cache/options directory
+.vs/
+.vs/*
