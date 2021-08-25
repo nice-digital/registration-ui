@@ -1,6 +1,6 @@
 import { withApiAuthRequired, getAccessToken } from '@auth0/nextjs-auth0';
 
-import registrations from "../../lib/registrations.json";
+import { fetchData, backend_url } from "../../lib/helpers";
 
 export default withApiAuthRequired(async function getRegistrations(req, res) {
 
@@ -10,7 +10,9 @@ export default withApiAuthRequired(async function getRegistrations(req, res) {
 
     console.log(`get registrations, access token: ${tokenResponse.accessToken}`);
 
-    //todo: call the real api here with the access token
+    const registrations = await  fetchData(backend_url, {
+        authorization: `Bearer ${tokenResponse.accessToken}`
+      });
 
     res.status(200).json(registrations);
 });

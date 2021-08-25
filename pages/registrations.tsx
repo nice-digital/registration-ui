@@ -13,7 +13,7 @@ import { fetchData } from "../lib/helpers";
   export const getServerSideProps = withPageAuthRequired({
       async getServerSideProps(context){
         return {
-            props: { registrations: await fetchData(context, '/api/getRegistrations')}
+            props: { registrations: await fetchData('/api/getRegistrations', { Cookie: context.req.headers.cookie})}
         }
       }
   });
