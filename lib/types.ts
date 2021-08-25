@@ -4,3 +4,9 @@ export type Registration = {
     dateSubmitted: string,
     status: string
 };
+
+export type UserProfile = {
+  firstName: string;
+  lastName: string;
+  emailAddress: string;
+}
