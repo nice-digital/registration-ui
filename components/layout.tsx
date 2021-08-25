@@ -5,6 +5,7 @@ export default function Layout({ children, loggedOut }: any) {
 	const auth: IdamProviderProps = {
 		links: [
 			{ text: "My registrations", url: "/registrations" },
+			{ text: "Profile", url: "/profile" },
 			{ text: "Sign out", url: "/api/auth/logout" },
 		],
 		displayName: "John",

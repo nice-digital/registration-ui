@@ -10,13 +10,13 @@ import { Registration } from "../lib/types";
 
 import { fetchData } from "../lib/helpers";
 
-  export const getServerSideProps = withPageAuthRequired({
-      async getServerSideProps(context){
-        return {
-            props: { registrations: await fetchData(context, '/api/getRegistrations')}
-        }
-      }
-  });
+export const getServerSideProps = withPageAuthRequired({
+    async getServerSideProps(context){
+    return {
+        props: { registrations: await fetchData(context, '/api/getRegistrations')}
+    }
+    }
+});
 
 export default function Registrations({registrations} : {registrations: Array<Registration>}) {
 
@@ -28,24 +28,28 @@ export default function Registrations({registrations} : {registrations: Array<Re
         <Layout>
             <PageHeader heading="My registrations" />
             <Table>
-                <tr>
-                    <th>Date submitted</th>
-                    <th>Topic / project</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-                {registrations && Array.isArray(registrations) && registrations.map((registration: Registration) => (
-                    <tr key={registration.id}>
-                        <td>{registration.dateSubmitted}</td>
-                        <td>{registration.title}</td>
-                        <td>{registration.status}</td>
-                        <td>{registration.status === "Pending" ? (
-                            <Button onClick={() => handleCancelClick(registration.id)}>Cancel request</Button>
-                        ) : registration.status === "Rejected" ? (
-                            <Button>Contact NICE about this request</Button>
-                        ) : null}</td>
+                <thead>
+                    <tr>
+                        <th>Date submitted</th>
+                        <th>Topic / project</th>
+                        <th>Status</th>
+                        <th></th>
                     </tr>
-                ))}
+                </thead>
+                <tbody>
+                    {registrations && Array.isArray(registrations) && registrations.map((registration: Registration) => (
+                        <tr key={registration.id}>
+                            <td>{registration.dateSubmitted}</td>
+                            <td>{registration.title}</td>
+                            <td>{registration.status}</td>
+                            <td>{registration.status === "Pending" ? (
+                                <Button onClick={() => handleCancelClick(registration.id)}>Cancel request</Button>
+                            ) : registration.status === "Rejected" ? (
+                                <Button>Contact NICE about this request</Button>
+                            ) : null}</td>
+                        </tr>
+                    ))}
+                </tbody>
             </Table>
         </Layout>
     );
