@@ -10,7 +10,7 @@ import { UserProfile } from "../lib/types";
 export const getServerSideProps = withPageAuthRequired({
     async getServerSideProps(context) {
         return {
-            props: { profile: await fetchData(context, '/api/userprofile')}
+            props: { profile: await fetchData('/api/userprofile', { Cookie: context.req.headers.cookie})}
         }
     }
 });
@@ -22,7 +22,7 @@ export default function Profile({ profile }: { profile: UserProfile } ) {
             <Input label="First name" name="firstname" defaultValue={profile.firstName} />
             <Input label="Last name" name="lastname" defaultValue={profile.lastName} />
             <Input label="Email address" name="emailaddress" defaultValue={profile.emailAddress} />
-            <Button>Update</Button>
+            <Button disabled>Update</Button>
         </Layout>
     );
 }
