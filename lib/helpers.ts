@@ -1,10 +1,12 @@
 const dev = process.env.NODE_ENV !== 'production';
 
-export const server = dev ? 'http://localhost:3000' : 'https://main.d36975sqzx9ikk.amplifyapp.com';
+export const server = dev ? 'http://localhost:3000' : process.env.SELF_URL;
 
-export async function fetchData(context: any, url: string) {
-    const res = await fetch(`${server}${url}`, {
-        headers: { Cookie: context.req.headers.cookie }
-    });
+export const backend_url = process.env.BACKEND_URL || "https://localhost";
+
+export async function fetchData(url: string, headersForFetch: any) {
+    const headers = Object.assign({}, headersForFetch);
+    const fetchUrl = url.startsWith("http") ? url : `${server}${url}`;
+    const res = await fetch(fetchUrl, { headers : headers });
     return await res.json();
 }

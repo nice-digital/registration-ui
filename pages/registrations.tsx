@@ -10,13 +10,13 @@ import { Registration } from "../lib/types";
 
 import { fetchData } from "../lib/helpers";
 
-export const getServerSideProps = withPageAuthRequired({
-    async getServerSideProps(context){
-    return {
-        props: { registrations: await fetchData(context, '/api/getRegistrations')}
-    }
-    }
-});
+  export const getServerSideProps = withPageAuthRequired({
+      async getServerSideProps(context){
+        return {
+            props: { registrations: await fetchData('/api/getRegistrations', { Cookie: context.req.headers.cookie})}
+        }
+      }
+  });
 
 export default function Registrations({registrations} : {registrations: Array<Registration>}) {
 
