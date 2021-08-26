@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "title": "CG187: Acute heart failure: diagnosis and management",
+        "expectedPublicationDate": "2020-10-27",
+        "status": "In Development",
+        "guidanceType": "Technology Appraisal"
+    },
+    {
+        "id": 2,
+        "title": "TA679: Chronic heart failure with reduced ejection fraction",
+        "expectedPublicationDate": "2020-09-15",
+        "status": "In Development",
+        "guidanceType": "Technology Appraisal"
+    },
+    {
+        "id": 3,
+        "title": "IPG694: Permanent His-bundle pacemaker implantation for treating heart failure",
+        "expectedPublicationDate": "2020-06-27",
+        "status": "In Development",
+        "guidanceType": "Technology Appraisal"
+    },
+    {
+        "id": 4,
+        "title": "GID-NG10097: Subarachnoid haemorrhage due to ruptured aneurysms",
+        "expectedPublicationDate": "2020-08-27",
+        "status": "In Development",
+        "guidanceType": "Technology Appraisal"
+    },
+    {
+        "id": 5,
+        "title": "CG187: Acute heart failure: diagnosis and management",
+        "expectedPublicationDate": "2020-10-27",
+        "status": "In Development",
+        "guidanceType": "Technology Appraisal"
+    },
+    {
+        "id": 6,
+        "title": "TA679: Chronic heart failure with reduced ejection fraction",
+        "expectedPublicationDate": "2020-09-15",
+        "status": "In Development",
+        "guidanceType": "Interventional Procedures"
+    },
+    {
+        "id": 7,
+        "title": "IPG694: Permanent His-bundle pacemaker implantation for treating heart failure",
+        "expectedPublicationDate": "2020-06-27",
+        "status": "In Development",
+        "guidanceType": "Interventional Procedures"
+    },
+    {
+        "id": 8,
+        "title": "GID-NG10097: Subarachnoid haemorrhage due to ruptured aneurysms",
+        "expectedPublicationDate": "2020-08-27",
+        "status": "In Development",
+        "guidanceType": "Interventional Procedures"
+    }
+]
