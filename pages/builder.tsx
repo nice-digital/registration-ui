@@ -24,6 +24,9 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
     console.log(JSON.stringify(guidance));
 
     const onSubmit = (values : any) => {
+
+        //todo: munge the selected project Id's into an array.
+
         window.alert(JSON.stringify(values));
 
         //todo: hit the process.env.BACKEND_URL with a POST and the json above. then show a success page.
