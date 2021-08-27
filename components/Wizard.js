@@ -1,3 +1,5 @@
+//this came from: https://final-form.org/docs/react-final-form/examples/wizard
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'react-final-form'
@@ -25,12 +27,6 @@ export default class Wizard extends React.Component {
     this.setState(state => ({
       page: Math.max(state.page - 1, 0)
     }))
-
-  /**
-   * NOTE: Both validate and handleSubmit switching are implemented
-   * here because 🏁 Redux Final Form does not accept changes to those
-   * functions once the form has been defined.
-   */
 
   validate = values => {
     const activePage = React.Children.toArray(this.props.children)[

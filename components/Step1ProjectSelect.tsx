@@ -1,25 +1,15 @@
 import { Field } from 'react-final-form'
 
-//import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-// import { Button } from "@nice-digital/nds-button";
-// import { Input } from "@nice-digital/nds-input";
 import { Card } from "@nice-digital/nds-card";
 import { Grid, GridItem } from "@nice-digital/nds-grid";
 import { PageHeader } from "@nice-digital/nds-page-header";
 
-//import { fetchData } from "../lib/helpers";
-//import Layout from "../components/layout";
 import { ProjectType } from "../lib/types";
 
-// export const getServerSideProps = withPageAuthRequired({
-//     async getServerSideProps(context) {
-//         return {
-//             props: { guidance: await fetchData(context, '/api/getGuidance')}
-//         }
-//     }
-// });
 
-export default function BuilderSelect({guidance} : {guidance: Array<ProjectType>}) {
+export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: Array<string>}) {
+
+    //todo: boost the preselected guidance to the top of the page.
 
     return (
         <>
@@ -66,7 +56,7 @@ const Guideline = ({ data }: { data: ProjectType }) => {
     
     return (
         <li>
-            <Field  name={`ID_${data.Reference}`} //todo: get rid of the ID_ thing.
+            <Field  name={`ID_${data.Reference}`} //todo: get rid of the ID_ thing. i think there might be references starting with numbers in the resultset, which make invalid javascript properties.
                     component="input"
                     type="checkbox"
                 />

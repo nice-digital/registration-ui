@@ -18,34 +18,25 @@ export const getServerSideProps = withPageAuthRequired({
     }
 });
 
-// const Error = ({ name } : { name: string }) => (
-//     <Field
-//       name={name}
-//       subscription={{ touched: true, error: true }}
-//       render={({ meta: { touched, error } }) =>
-//         touched && error ? <span>{error}</span> : null
-//       }
-//     />
-//   )
-
 export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
 
     console.log("builder function here");
     console.log(JSON.stringify(guidance));
 
     const onSubmit = (values : any) => {
-        window.alert(JSON.stringify(values))
-      }
+        window.alert(JSON.stringify(values));
 
-    
+        //todo: hit the process.env.BACKEND_URL with a POST and the json above. then show a success page.
+
+      }    
 
     return (
         <Layout>
             <Wizard
-                initialValues={{ preselectedProductId: 'TODO: get from the querystring' }}
+                initialValues={{}}
                 onSubmit={onSubmit}>
                 <Wizard.Page >
-                    <Step1ProjectSelect guidance={guidance} />
+                    <Step1ProjectSelect guidance={guidance} preselectedIds={["PH24"]} /> {/* TODO: get the preselected ids from the querystring */}
                 </Wizard.Page>
                 <Wizard.Page>
                     <Step2UserDetails/>
