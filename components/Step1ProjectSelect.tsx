@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Field } from 'react-final-form'
+
 //import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 // import { Button } from "@nice-digital/nds-button";
 // import { Input } from "@nice-digital/nds-input";
@@ -8,7 +9,7 @@ import { PageHeader } from "@nice-digital/nds-page-header";
 
 //import { fetchData } from "../lib/helpers";
 //import Layout from "../components/layout";
-import { GuidelineType } from "../lib/types";
+import { ProjectType } from "../lib/types";
 
 // export const getServerSideProps = withPageAuthRequired({
 //     async getServerSideProps(context) {
@@ -18,7 +19,7 @@ import { GuidelineType } from "../lib/types";
 //     }
 // });
 
-export default function BuilderSelect({guidance} : {guidance: Array<GuidelineType>}) {
+export default function BuilderSelect({guidance} : {guidance: Array<ProjectType>}) {
 
     return (
         <>
@@ -29,8 +30,8 @@ export default function BuilderSelect({guidance} : {guidance: Array<GuidelineTyp
                 </GridItem>
 				<GridItem cols={12} md={9}>
                     <ul>
-                        {guidance && guidance.map((guideline: GuidelineType) => (
-                            <Guideline data={guideline} key={guideline.id} />
+                        {guidance && Array.isArray(guidance) && guidance.map((guideline: ProjectType) => (
+                            <Guideline data={guideline} key={guideline.Reference} />
                         ))}
                     </ul>
                 </GridItem>
@@ -39,7 +40,7 @@ export default function BuilderSelect({guidance} : {guidance: Array<GuidelineTyp
     );
 }
 
-const Guideline = ({ data }: { data: GuidelineType }) => {
+const Guideline = ({ data }: { data: ProjectType }) => {
     // const usersListHeading = {
     //     headingText: data.title
     //     link: {
@@ -51,22 +52,25 @@ const Guideline = ({ data }: { data: GuidelineType }) => {
     const usersListMetadata = [
         {
             label: "Status",
-            value: data.status,
+            value: data.Status,
         },
         {
-            label: "Type",
-            value: data.guidanceType,
+            label: "Project Type",
+            value: data.ProjectType,
         },
         {
             label: "Expected publication date",
-            value: `Expected publication date: ${data.expectedPublicationDate}`,
+            value: `Expected publication date: ${data.PublishedDate}`,
         }
     ];
     
     return (
         <li>
-            <input type="checkbox" />
-            <Card headingText={data.title} metadata={usersListMetadata} />
+            <Field  name={`ID_${data.Reference}`} //todo: get rid of the ID_ thing.
+                    component="input"
+                    type="checkbox"
+                />
+            <Card headingText={data.Title} metadata={usersListMetadata} />
         </li>
     );
 };

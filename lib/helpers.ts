@@ -7,6 +7,10 @@ export const backend_url = process.env.BACKEND_URL || "https://localhost";
 export async function fetchData(url: string, headersForFetch: any) {
     const headers = Object.assign({}, headersForFetch);
     const fetchUrl = url.startsWith("http") ? url : `${server}${url}`;
+
+console.log(`fetch data url: ${fetchUrl}`);
+console.log(`fetch data headers: ${JSON.stringify(headers)}`);
+
     const res = await fetch(fetchUrl, { headers : headers });
     return await res.json();
 }
