@@ -86,15 +86,26 @@ export default function UserDetails() {
                 {/* <Error name="county" /> */}
             </div>
             <div>
+                <label>Post code</label>
+                <Field
+                    name="postcode"
+                    component="input"
+                    type="text"
+                    validate={required}
+                />
+                <Error name="postcode" /> 
+            </div>
+            <div>
                 <label>Country</label>
-                <Field name="country" component="select">
+                <Field name="country" component="select" validate={required}>
+                    <option value=""></option>
                     <option value="England">England</option>
-                    <option value="England">Scotland</option>
-                    <option value="England">Wales</option>
-                    <option value="England">Northern Ireland</option>
+                    <option value="Scotland">Scotland</option>
+                    <option value="Wales">Wales</option>
+                    <option value="Northern Ireland">Northern Ireland</option>
                     {/* TODO: add the proper list here. */}
                 </Field>
-                {/* <Error name="country" /> */}
+                <Error name="country" />
             </div>
             {/* TODO: the other fields */}
         </>

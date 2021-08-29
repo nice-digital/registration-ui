@@ -22,7 +22,7 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
 
     return (
         <>
-            <PageHeader heading="Builder" />
+            <PageHeader heading="Profile builder" />
             <Grid>
                 { preselectedProject !== null && (
                     <GridItem cols={12}>
