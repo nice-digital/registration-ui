@@ -1,4 +1,5 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { useRouter } from 'next/router'
 
 import { fetchData } from "../lib/helpers";
 import Layout from "../components/layout";
@@ -19,9 +20,8 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
+    const router = useRouter()
 
-    console.log("builder function here");
-    console.log(JSON.stringify(guidance));
 
     const onSubmit = (values : any) => {
 
@@ -39,7 +39,7 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
                 initialValues={{}}
                 onSubmit={onSubmit}>
                 <Wizard.Page >
-                    <Step1ProjectSelect guidance={guidance} preselectedIds={["PH24"]} /> {/* TODO: get the preselected ids from the querystring */}
+                    <Step1ProjectSelect guidance={guidance} preselectedIds={router.query.select} />
                 </Wizard.Page>
                 <Wizard.Page>
                     <Step2UserDetails/>

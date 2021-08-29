@@ -7,14 +7,30 @@ import { PageHeader } from "@nice-digital/nds-page-header";
 import { ProjectType } from "../lib/types";
 
 
-export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: Array<string>}) {
+export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: string | Array<string> | undefined}) {
 
-    //todo: boost the preselected guidance to the top of the page.
+    //boosting the preselected guidance to the top of the page.
+    let preselectedProject : ProjectType;
+    console.log(preselectedIds);
+    if (typeof(preselectedIds) !== "undefined" && !Array.isArray(preselectedIds)){ //currently just handling a single preselected project. todo: (in next phase) handle more.
+        const foundProject = guidance.find(elem => elem.Reference === preselectedIds?.toUpperCase());
+        if (typeof(foundProject) !== "undefined"){
+            preselectedProject = foundProject;
+            guidance = guidance.filter(elem => elem.Reference !== preselectedIds?.toUpperCase());
+        }
+    }
 
     return (
         <>
             <PageHeader heading="Builder" />
             <Grid>
+                { (typeof(preselectedProject) !== "undefined") && (
+                    <GridItem cols={12}>
+                        <ul>
+                            <Guideline data={preselectedProject} key={preselectedProject.Reference} />
+                        </ul>                    
+                    </GridItem>
+                )}
                 <GridItem cols={12} md={3}>
 					<p>Filter</p>
                 </GridItem>
@@ -39,6 +55,12 @@ const Guideline = ({ data }: { data: ProjectType }) => {
     //     },
     // };
 
+    let formattedDate = "";
+    if (data.PublishedDate !== null){
+        const parsedDate = new Date(data.PublishedDate);
+        formattedDate = parsedDate.toLocaleDateString();
+    }
+
     const usersListMetadata = [
         {
             label: "Status",
@@ -49,14 +71,20 @@ const Guideline = ({ data }: { data: ProjectType }) => {
             value: data.ProjectType,
         },
         {
+            label: "Reference",
+            value: data.Reference,
+        },        
+        {
             label: "Expected publication date",
-            value: `Expected publication date: ${data.PublishedDate}`,
+            value: `Expected publication date: ${formattedDate}`,
         }
     ];
-    
+
+    const reference = data.Reference === "41" ? "DG41" : data.Reference; //todo: fix the indev feed which is returning a reference of "41" for DG41 - which screws up the javascript property which can't handle starting with a number.
+
     return (
         <li>
-            <Field  name={`ID_${data.Reference}`} //todo: get rid of the ID_ thing. i think there might be references starting with numbers in the resultset, which make invalid javascript properties.
+            <Field  name={reference}
                     component="input"
                     type="checkbox"
                 />

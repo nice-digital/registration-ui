@@ -59,6 +59,19 @@ export default class Wizard extends React.Component {
       >
         {({ handleSubmit, submitting, values }) => (
           <form onSubmit={handleSubmit}>
+            <div className="buttons">
+              {page > 0 && (
+                <button type="button" onClick={this.previous}>
+                  « Previous
+                </button>
+              )}
+              {!isLastPage && <button type="submit">Next »</button>}
+              {isLastPage && (
+                <button type="submit" disabled={submitting}>
+                  Submit
+                </button>
+              )}
+            </div>
             {activePage}
             <div className="buttons">
               {page > 0 && (
