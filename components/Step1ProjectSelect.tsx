@@ -10,7 +10,7 @@ import { ProjectType } from "../lib/types";
 export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: string | Array<string> | undefined}) {
 
     //boosting the preselected guidance to the top of the page.
-    let preselectedProject : ProjectType;
+    let preselectedProject : ProjectType | null = null;
     console.log(preselectedIds);
     if (typeof(preselectedIds) !== "undefined" && !Array.isArray(preselectedIds)){ //currently just handling a single preselected project. todo: (in next phase) handle more.
         const foundProject = guidance.find(elem => elem.Reference === preselectedIds?.toUpperCase());
@@ -24,7 +24,7 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
         <>
             <PageHeader heading="Builder" />
             <Grid>
-                { (typeof(preselectedProject) !== "undefined") && (
+                { preselectedProject !== null && (
                     <GridItem cols={12}>
                         <ul>
                             <Guideline data={preselectedProject} key={preselectedProject.Reference} />
