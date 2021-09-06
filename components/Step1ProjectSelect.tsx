@@ -5,7 +5,6 @@ import { Field } from 'react-final-form'
 import { Card } from "@nice-digital/nds-card";
 import { Grid, GridItem } from "@nice-digital/nds-grid";
 import { PageHeader } from "@nice-digital/nds-page-header";
-import { Checkbox } from "@nice-digital/nds-checkbox";
 
 import { ProjectType } from "../lib/types";
 
@@ -49,7 +48,11 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
 					<p>Filter</p>
                 </GridItem>
 				<GridItem cols={12} md={9}>
-                    
+                        <Field name="ticked"
+                            component="input"
+                            type="hidden"
+                            value={selected.length ? selected.length : undefined}
+                        />
                         {guidance && Array.isArray(guidance) && guidance.map((guideline: ProjectType) => {
                             const checked = selected.some(item => guideline.Reference === item);
 
@@ -100,16 +103,28 @@ const Guideline = ({ data, checked, onCheckboxChange  }: { data: ProjectType, ch
 
     return (
         <div className={styles.projectContainer}>
-            <div className={styles.projectCheckbox}>
-                <Checkbox name={reference} value=" " inline={true} checked={checked} onChange={onCheckboxChange} />
+            <div className={styles.projectCheckbox}>                
+               <Field name={reference} type="checkbox" checked={checked}>
+                    {({ input }) => {
+                        return (
+                            <div className="checkbox">
+                                <input
+                                    type="checkbox"
+                                    className="checkbox__input"
+                                    name={input.name}
+                                    value={input.name}
+                                    checked={input.checked}
+                                    onChange={input.onChange}
+                                />
+                                <label className="checkbox__label" htmlFor={input.name}>&nbsp;</label>
+                            </div>
+                        );
+                    }}
+                </Field>
             </div>
             <div className={styles.projectCard}>
                 <Card {...guidelineLink} headingText={data.Title} metadata={guidelineMetadata} />
             </div>
-            {/* <Field name={reference}
-                component="input"
-                type="checkbox"
-            /> */}
         </div>
     );
 };
