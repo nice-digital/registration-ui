@@ -1,0 +1,11 @@
+.project {
+    &Container {
+        display: flex;
+    }
+
+    &Checkbox {}
+
+    &Card {
+        flex-grow: 1;
+    }
+}

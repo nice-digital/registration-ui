@@ -4,6 +4,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'react-final-form'
 
+import { Button } from "@nice-digital/nds-button";
+
 export default class Wizard extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
@@ -61,29 +63,29 @@ export default class Wizard extends React.Component {
           <form onSubmit={handleSubmit}>
             <div className="buttons">
               {page > 0 && (
-                <button type="button" onClick={this.previous}>
+                <Button type="button" onClick={this.previous}>
                   « Previous
-                </button>
+                </Button>
               )}
-              {!isLastPage && <button type="submit">Next »</button>}
+              {!isLastPage && <Button type="submit">Next »</Button>}
               {isLastPage && (
-                <button type="submit" disabled={submitting}>
+                <Button type="submit" disabled={submitting}>
                   Submit
-                </button>
+                </Button>
               )}
             </div>
             {activePage}
             <div className="buttons">
               {page > 0 && (
-                <button type="button" onClick={this.previous}>
+                <Button type="button" onClick={this.previous}>
                   « Previous
-                </button>
+                </Button>
               )}
-              {!isLastPage && <button type="submit">Next »</button>}
+              {!isLastPage && <Button type="submit">Next »</Button>}
               {isLastPage && (
-                <button type="submit" disabled={submitting}>
+                <Button type="submit" disabled={submitting}>
                   Submit
-                </button>
+                </Button>
               )}
             </div>
             <pre>{JSON.stringify(values, 0, 2)}</pre>

@@ -1,13 +1,29 @@
+import { useState } from "react";
+import Link from "next/link";
 import { Field } from 'react-final-form'
 
 import { Card } from "@nice-digital/nds-card";
 import { Grid, GridItem } from "@nice-digital/nds-grid";
 import { PageHeader } from "@nice-digital/nds-page-header";
+import { Checkbox } from "@nice-digital/nds-checkbox";
 
 import { ProjectType } from "../lib/types";
 
+import styles from "../styles/builder.module.scss";
+import React from 'react';
+
 
 export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: string | Array<string> | undefined}) {
+    const [selected, setSelected] = useState<Array<string>>([]);
+
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const checkboxName = e.target.name;
+        const alreadyTicked = selected.some(item => checkboxName === item);
+        const updatedSelected = alreadyTicked ? [...selected].filter(item => checkboxName !== item) : [...selected, checkboxName];
+
+        setSelected(updatedSelected);
+    };
+
 
     //boosting the preselected guidance to the top of the page.
     let preselectedProject : ProjectType | null = null;
@@ -26,42 +42,42 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
             <Grid>
                 { preselectedProject !== null && (
                     <GridItem cols={12}>
-                        <ul>
-                            <Guideline data={preselectedProject} key={preselectedProject.Reference} />
-                        </ul>                    
+                        <Guideline data={preselectedProject} key={preselectedProject.Reference} checked={true} onCheckboxChange={handleCheckboxChange} />                        
                     </GridItem>
                 )}
                 <GridItem cols={12} md={3}>
 					<p>Filter</p>
                 </GridItem>
 				<GridItem cols={12} md={9}>
-                    <ul>
-                        {guidance && Array.isArray(guidance) && guidance.map((guideline: ProjectType) => (
-                            <Guideline data={guideline} key={guideline.Reference} />
-                        ))}
-                    </ul>
+                    
+                        {guidance && Array.isArray(guidance) && guidance.map((guideline: ProjectType) => {
+                            const checked = selected.some(item => guideline.Reference === item);
+
+                            return <Guideline data={guideline} key={guideline.Reference} checked={checked} onCheckboxChange={handleCheckboxChange} />;
+                        })}
+                    
                 </GridItem>
             </Grid>
         </>
     );
 }
 
-const Guideline = ({ data }: { data: ProjectType }) => {
-    // const usersListHeading = {
-    //     headingText: data.title
-    //     link: {
-    //         elementType: Link,
-    //         destination: `/users/${userId}`,
-    //     },
-    // };
-
+const Guideline = ({ data, checked, onCheckboxChange  }: { data: ProjectType, checked: boolean, onCheckboxChange: Function }) => {
     let formattedDate = "";
     if (data.PublishedDate !== null){
         const parsedDate = new Date(data.PublishedDate);
         formattedDate = parsedDate.toLocaleDateString();
     }
 
-    const usersListMetadata = [
+    const guidelineLink = {
+        link: {
+            elementType: Link,
+            destination: `/project/${data.Reference}`,
+            method: "href"
+        },
+    };
+
+    const guidelineMetadata = [
         {
             label: "Status",
             value: data.Status,
@@ -83,12 +99,17 @@ const Guideline = ({ data }: { data: ProjectType }) => {
     const reference = data.Reference === "41" ? "DG41" : data.Reference; //todo: fix the indev feed which is returning a reference of "41" for DG41 - which screws up the javascript property which can't handle starting with a number.
 
     return (
-        <li>
-            <Field  name={reference}
-                    component="input"
-                    type="checkbox"
-                />
-            <Card headingText={data.Title} metadata={usersListMetadata} />
-        </li>
+        <div className={styles.projectContainer}>
+            <div className={styles.projectCheckbox}>
+                <Checkbox name={reference} value=" " inline={true} checked={checked} onChange={onCheckboxChange} />
+            </div>
+            <div className={styles.projectCard}>
+                <Card {...guidelineLink} headingText={data.Title} metadata={guidelineMetadata} />
+            </div>
+            {/* <Field name={reference}
+                component="input"
+                type="checkbox"
+            /> */}
+        </div>
     );
 };
