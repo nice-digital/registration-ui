@@ -13,17 +13,6 @@ import React from 'react';
 
 
 export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: string | Array<string> | undefined}) {
-    const [selected, setSelected] = useState<Array<string>>([]);
-
-    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        const checkboxName = e.target.name;
-        const alreadyTicked = selected.some(item => checkboxName === item);
-        const updatedSelected = alreadyTicked ? [...selected].filter(item => checkboxName !== item) : [...selected, checkboxName];
-
-        setSelected(updatedSelected);
-    };
-
-
     //boosting the preselected guidance to the top of the page.
     let preselectedProject : ProjectType | null = null;
     console.log(preselectedIds);
@@ -41,31 +30,23 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
             <Grid>
                 { preselectedProject !== null && (
                     <GridItem cols={12}>
-                        <Guideline data={preselectedProject} key={preselectedProject.Reference} checked={true} onCheckboxChange={handleCheckboxChange} />                        
+                        <Guideline data={preselectedProject} checked={true} key={preselectedProject.Reference} />                        
                     </GridItem>
                 )}
                 <GridItem cols={12} md={3}>
 					<p>Filter</p>
                 </GridItem>
 				<GridItem cols={12} md={9}>
-                        <Field name="ticked"
-                            component="input"
-                            type="hidden"
-                            value={selected.length ? selected.length : undefined}
-                        />
-                        {guidance && Array.isArray(guidance) && guidance.map((guideline: ProjectType) => {
-                            const checked = selected.some(item => guideline.Reference === item);
-
-                            return <Guideline data={guideline} key={guideline.Reference} checked={checked} onCheckboxChange={handleCheckboxChange} />;
-                        })}
-                    
+                    {guidance && Array.isArray(guidance) && guidance.map((guideline: ProjectType) => {
+                        return <Guideline data={guideline} key={guideline.Reference} />;
+                    })}
                 </GridItem>
             </Grid>
         </>
     );
 }
 
-const Guideline = ({ data, checked, onCheckboxChange  }: { data: ProjectType, checked: boolean, onCheckboxChange: Function }) => {
+const Guideline = ({ data, checked }: { data: ProjectType, checked?: boolean }) => {
     let formattedDate = "";
     if (data.PublishedDate !== null){
         const parsedDate = new Date(data.PublishedDate);
@@ -104,22 +85,19 @@ const Guideline = ({ data, checked, onCheckboxChange  }: { data: ProjectType, ch
     return (
         <div className={styles.projectContainer}>
             <div className={styles.projectCheckbox}>                
-               <Field name={reference} type="checkbox" checked={checked}>
-                    {({ input }) => {
-                        return (
-                            <div className="checkbox">
-                                <input
-                                    type="checkbox"
-                                    className="checkbox__input"
-                                    name={input.name}
-                                    value={input.name}
-                                    checked={input.checked}
-                                    onChange={input.onChange}
-                                />
-                                <label className="checkbox__label" htmlFor={input.name}>&nbsp;</label>
-                            </div>
-                        );
-                    }}
+               <Field name={reference} type="checkbox" value={checked}>
+                    {({ input }) => (                    
+                        <div className="checkbox">
+                            <input
+                                type="checkbox"
+                                className="checkbox__input"
+                                name={input.name}
+                                checked={input.value}
+                                onChange={input.onChange}
+                            />
+                            <label className="checkbox__label" htmlFor={input.name}>&nbsp;</label>
+                        </div>
+                    )}
                 </Field>
             </div>
             <div className={styles.projectCard}>
