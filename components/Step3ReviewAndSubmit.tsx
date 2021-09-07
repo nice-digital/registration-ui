@@ -1,17 +1,16 @@
-import { useForm } from 'react-final-form'
+import React from 'react';
+
+import WizardContext from "../components/WizardContext";
 
 export default function ReviewAndSubmit() {
-    const form = useForm();
 
-    console.log(JSON.stringify(form));
-
-    //todo: pull the values from the Wizard then construct the page from them.
+    const value = React.useContext(WizardContext);  
+    console.log("value from use context:" + JSON.stringify(value));
 
     return (
         <>
-            <h3>Review page goes here</h3>
-
-            <p></p>
+            <h3>Review page values:</h3>
+            <pre>{JSON.stringify(value)}</pre>                 
         </>
     )
 }
