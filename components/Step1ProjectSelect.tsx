@@ -99,7 +99,7 @@ const Guideline = ({ data, checked, onCheckboxChange  }: { data: ProjectType, ch
         }
     ];
 
-    const reference = data.Reference === "41" ? "DG41" : data.Reference; //todo: fix the indev feed which is returning a reference of "41" for DG41 - which screws up the javascript property which can't handle starting with a number.
+    const reference = `PROJECT-${data.Reference}`; //data.Reference === "41" ? "DG41" : data.Reference; //todo: fix the indev feed which is returning a reference of "41" for DG41 - which screws up the javascript property which can't handle starting with a number.
 
     return (
         <div className={styles.projectContainer}>
