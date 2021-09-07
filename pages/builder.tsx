@@ -22,7 +22,6 @@ export const getServerSideProps = withPageAuthRequired({
 export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
     const router = useRouter()
 
-
     const onSubmit = (values : any) => {
 
         //todo: munge the selected project Id's into an array.
@@ -38,7 +37,7 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
             <Wizard
                 initialValues={{}}
                 onSubmit={onSubmit}>
-                <Wizard.Page >
+                <Wizard.Page>
                     <Step1ProjectSelect guidance={guidance} preselectedIds={router.query.select} />
                 </Wizard.Page>
                 <Wizard.Page>
