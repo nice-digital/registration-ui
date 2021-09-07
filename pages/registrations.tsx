@@ -1,4 +1,5 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import Link from "next/link";
 
 import Layout from '../components/layout';
 
@@ -51,6 +52,9 @@ export default function Registrations({registrations} : {registrations: Array<Re
                     ))}
                 </tbody>
             </Table>
+            <Link href="/builder">
+                <button className="btn btn--cta">New registration</button>
+            </Link>
         </Layout>
     );
 }
