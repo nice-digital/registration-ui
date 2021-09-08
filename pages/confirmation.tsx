@@ -9,7 +9,7 @@ export default function Confirmation() {
         <Layout>
             <PageHeader heading="Confirmation page" />
             <br/><br/>
-            <p>You have submitted. We'll let you know.</p>
+            <p>You have submitted. We&apos;ll let you know.</p>
             <br/><br/>
             <p>TODO: real content.</p>
             <br/><br/><br/><br/>
