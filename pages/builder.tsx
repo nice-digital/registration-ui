@@ -29,12 +29,13 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
         //todo: munge the selected project Id's into an array.
         const mungedData = mungeFormValueData(values, guidance);
 
-        window.alert(JSON.stringify(mungedData));
+        //window.alert(JSON.stringify(mungedData));
 
-        await fetchData('/api/submitRegistrations', {}, 'POST', mungedData);
+        const response = await fetchData('/api/submitRegistration', {}, 'POST', JSON.stringify(mungedData));
 
-        //todo: hit the process.env.BACKEND_URL with a POST and the json above. then show a success page.
+        console.log("response:" + response);
 
+        router.push('/confirmation');
       }    
 
     return (
