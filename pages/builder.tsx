@@ -27,7 +27,7 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
     const onSubmit = async (values : any) => {
 
         //todo: munge the selected project Id's into an array.
-        const mungedData = mungeFormValueData(values);
+        const mungedData = mungeFormValueData(values, guidance);
 
         window.alert(JSON.stringify(mungedData));
 
@@ -49,7 +49,7 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
                     <Step2UserDetails/>
                 </Wizard.Page>
                 <Wizard.Page>
-                    <Step3ReviewAndSubmit/>
+                    <Step3ReviewAndSubmit guidance={guidance}/>
                 </Wizard.Page>
             </Wizard>
         </Layout>
