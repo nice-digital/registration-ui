@@ -9,10 +9,11 @@ import { PageHeader } from "@nice-digital/nds-page-header";
 import { ProjectType } from "../lib/types";
 
 import styles from "../styles/builder.module.scss";
-import React from 'react';
-
+import FilterSearch from "./FilterSearch";
 
 export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: string | Array<string> | undefined}) {
+    const [projects, setProjects] = useState<Array<ProjectType>>(guidance);
+
     //boosting the preselected guidance to the top of the page.
     let preselectedProject : ProjectType | null = null;
     console.log(preselectedIds);
@@ -24,20 +25,25 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
         }
     }
 
+    const filterProjectsBySearch = (searchQuery: string) => {
+        const updatedGuidance = guidance.filter(item => item.Title.includes(searchQuery));
+        setProjects(updatedGuidance);
+    };
+
     return (
         <>
             <PageHeader heading="Profile builder" />
             <Grid>
-                { preselectedProject !== null && (
+                {preselectedProject !== null && (
                     <GridItem cols={12}>
                         <Guideline data={preselectedProject} checked={true} key={preselectedProject.Reference} />                        
                     </GridItem>
                 )}
                 <GridItem cols={12} md={3}>
-					<p>Filter</p>
+					<FilterSearch onInputChange={filterProjectsBySearch} label="Filter by name" />
                 </GridItem>
 				<GridItem cols={12} md={9}>
-                    {guidance && Array.isArray(guidance) && guidance.map((guideline: ProjectType) => {
+                    {projects && Array.isArray(projects) && projects.map((guideline: ProjectType) => {
                         return <Guideline data={guideline} key={guideline.Reference} />;
                     })}
                 </GridItem>
@@ -85,19 +91,21 @@ const Guideline = ({ data, checked }: { data: ProjectType, checked?: boolean }) 
     return (
         <div className={styles.projectContainer}>
             <div className={styles.projectCheckbox}>                
-               <Field name={reference} type="checkbox" value={checked}>
-                    {({ input }) => (                    
-                        <div className="checkbox">
-                            <input
-                                type="checkbox"
-                                className="checkbox__input"
-                                name={input.name}
-                                checked={input.value}
-                                onChange={input.onChange}
-                            />
-                            <label className="checkbox__label" htmlFor={input.name}>&nbsp;</label>
-                        </div>
-                    )}
+               <Field name={reference} type="checkbox" initialValue={checked}>
+                    {({ input }) => {
+                        return (
+                            <div className="checkbox">
+                                <input
+                                    type="checkbox"
+                                    className="checkbox__input"
+                                    name={input.name}
+                                    checked={input.checked}
+                                    onChange={input.onChange}
+                                />
+                                <label className="checkbox__label" htmlFor={input.name}>&nbsp;</label>
+                            </div>
+                        );
+                    }}
                 </Field>
             </div>
             <div className={styles.projectCard}>
