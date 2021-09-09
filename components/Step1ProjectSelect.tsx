@@ -7,6 +7,7 @@ import { Grid, GridItem } from "@nice-digital/nds-grid";
 import { PageHeader } from "@nice-digital/nds-page-header";
 
 import { ProjectType } from "../lib/types";
+import { projectPrefix } from "../lib/helpers";
 
 import styles from "../styles/builder.module.scss";
 import FilterSearch from "./FilterSearch";
@@ -86,7 +87,7 @@ const Guideline = ({ data, checked }: { data: ProjectType, checked?: boolean }) 
         }
     ];
 
-    const reference = data.Reference === "41" ? "DG41" : data.Reference; //todo: fix the indev feed which is returning a reference of "41" for DG41 - which screws up the javascript property which can't handle starting with a number.
+    const reference = `${projectPrefix}${data.Reference}`; //data.Reference === "41" ? "DG41" : data.Reference; //todo: fix the indev feed which is returning a reference of "41" for DG41 - which screws up the javascript property which can't handle starting with a number.
 
     return (
         <div className={styles.projectContainer}>

@@ -13,7 +13,7 @@ export default function Home() {
 
 	return (
 		<Layout loggedOut={user ? false : true}>
-			<PageHeader heading="Niceorg home page" />
+			<PageHeader heading="Niceorg product page for PH25" />
 			<Link href="/builder?select=PH25">Register as a stakeholder</Link>
 		</Layout>
 	);
