@@ -6,6 +6,7 @@ import Layout from "../components/layout";
 import { ProjectType } from "../lib/types";
 
 import Wizard from '../components/Wizard';
+import { Field } from 'react-final-form'
 
 import Step1ProjectSelect from "../components/Step1ProjectSelect";
 import Step2UserDetails from "../components/Step2UserDetails";
@@ -30,14 +31,39 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
 
         //todo: hit the process.env.BACKEND_URL with a POST and the json above. then show a success page.
 
-      }    
+    }    
+
+    const Error = ({ name }: any) => (
+        <Field
+            name={name}
+            subscription={{ touched: true, error: true }}
+            render={({ meta: { touched, error } }) =>
+            touched && error ? <span>{error}</span> : null
+            }
+        />
+    );
+
+    const validateCheckbox = (values: any) => {
+        const errors: any = {};
+        const allDeselected = (!(Object.values(values).some(item => item === true)));
+        const nothingSelected = (!(Object.values(values).length));
+
+        if (nothingSelected || allDeselected) {
+            errors["projectSelect"] = "Required";
+        }
+
+        return errors;
+    };    
 
     return (
         <Layout>
             <Wizard
                 initialValues={{}}
                 onSubmit={onSubmit}>
-                <Wizard.Page>
+                {/*
+                // @ts-ignore */}
+                <Wizard.Page validate={(values) => validateCheckbox(values)} >
+                    <Error name="projectSelect" />
                     <Step1ProjectSelect guidance={guidance} preselectedIds={router.query.select} />
                 </Wizard.Page>
                 <Wizard.Page>
