@@ -17,7 +17,7 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
 
     //boosting the preselected guidance to the top of the page.
     let preselectedProject : ProjectType | null = null;
-    console.log(preselectedIds);
+    //console.log(preselectedIds);
     if (typeof(preselectedIds) !== "undefined" && !Array.isArray(preselectedIds)){ //currently just handling a single preselected project. todo: (in next phase) handle more.
         const foundProject = guidance.find(elem => elem.Reference === preselectedIds?.toUpperCase());
         if (typeof(foundProject) !== "undefined"){

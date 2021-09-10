@@ -12,9 +12,8 @@ export default function Confirmation() {
             <p>You have submitted. We&apos;ll let you know.</p>
             <br/><br/>
             <p>TODO: real content.</p>
-            <br/><br/><br/><br/>
+            <br/><br/>
             <Link href="/registrations">Go to your registrations list page</Link>
-
         </Layout>
     );
 }

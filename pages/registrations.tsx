@@ -31,8 +31,10 @@ export default function Registrations({registrations} : {registrations: Array<Re
             <Table>
                 <thead>
                     <tr>
-                        <th>Date submitted</th>
+                        <th>Date submitted &#x25be;</th>
+                        <th>Id</th>
                         <th>Topic / project</th>
+                        <th>Programme</th>
                         <th>Status</th>
                         <th></th>
                     </tr>
@@ -41,7 +43,9 @@ export default function Registrations({registrations} : {registrations: Array<Re
                     {registrations && Array.isArray(registrations) && registrations.map((registration: Registration) => (
                         <tr key={registration.id}>
                             <td>{registration.dateSubmitted}</td>
+                            <td>{registration.projectID}</td>
                             <td>{registration.title}</td>
+                            <td>{registration.productTypeName}</td>
                             <td>{registration.status}</td>
                             <td>{registration.status === "Pending" ? (
                                 <Button onClick={() => handleCancelClick(registration.id)}>Cancel request</Button>
