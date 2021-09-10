@@ -1,6 +1,8 @@
 export type Registration = {
 	id: number,
 	title: string,
+	projectID: string,
+	productTypeName: string,
 	dateSubmitted: string,
 	status: string
 };
@@ -29,3 +31,9 @@ export type ProjectType = {
 	ProjectType: string; //eg "TA"
 	ProductTypeName: string; //eg "Technology appraisal guidance"
 };
+
+export type BackendProjectType = {
+	id: string;
+	title: string;
+	productTypeName: string;
+}

@@ -1,17 +1,29 @@
-import { useForm } from 'react-final-form'
+import React from 'react';
 
-export default function ReviewAndSubmit() {
-    const form = useForm();
+import WizardContext from "../components/WizardContext";
+import { mungeFormValueData } from "../lib/helpers";
+import { ProjectType } from "../lib/types";
 
-    console.log(JSON.stringify(form));
+//export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: string | Array<string> | undefined}) {
+export default function ReviewAndSubmit({guidance} : {guidance: Array<ProjectType>}) {
 
-    //todo: pull the values from the Wizard then construct the page from them.
+    let value = React.useContext(WizardContext);  
+
+
+
+    //console.log("value from use context:" + JSON.stringify(value));
+
+    value = mungeFormValueData(value, guidance);
+
+    //console.log("munged value from use context:" + JSON.stringify(value));
+
+    //sample munged value: {projects: ["GID-TA10480","GID-TA10590"],"registeringAs":"organisation","organisationName":"fjdskl","addressLine1":"jkl","addressLine2":"jk","townOrCity":"jk","county":"jk","postcode":"jk","country":"Scotland"}
 
     return (
         <>
-            <h3>Review page goes here</h3>
-
-            <p></p>
+            <h3>Review and submit page</h3>
+            <p>todo: pretty up the data:</p>
+            <pre>{JSON.stringify(value, null, "\t")}</pre>               
         </>
     )
 }

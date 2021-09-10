@@ -4,6 +4,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'react-final-form'
 
+import { Button } from "@nice-digital/nds-button";
+
+import WizardContext from "./WizardContext";
+
 export default class Wizard extends React.Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
@@ -56,38 +60,42 @@ export default class Wizard extends React.Component {
         initialValues={values}
         validate={this.validate}
         onSubmit={this.handleSubmit}
-      >
+      >        
         {({ handleSubmit, submitting, values }) => (
-          <form onSubmit={handleSubmit}>
-            <div className="buttons">
-              {page > 0 && (
-                <button type="button" onClick={this.previous}>
-                  « Previous
-                </button>
-              )}
-              {!isLastPage && <button type="submit">Next »</button>}
-              {isLastPage && (
-                <button type="submit" disabled={submitting}>
-                  Submit
-                </button>
-              )}
-            </div>
-            {activePage}
-            <div className="buttons">
-              {page > 0 && (
-                <button type="button" onClick={this.previous}>
-                  « Previous
-                </button>
-              )}
-              {!isLastPage && <button type="submit">Next »</button>}
-              {isLastPage && (
-                <button type="submit" disabled={submitting}>
-                  Submit
-                </button>
-              )}
-            </div>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
-          </form>
+          <>
+            <form onSubmit={handleSubmit}>
+              <div className="buttons">
+                {page > 0 && (
+                  <Button type="button" onClick={this.previous}>
+                    « Previous
+                  </Button>
+                )}
+                {!isLastPage && <Button type="submit">Next »</Button>}
+                {isLastPage && (
+                  <Button type="submit" disabled={submitting}>
+                    Submit
+                  </Button>
+                )}
+              </div>
+              <WizardContext.Provider value={values}>
+                {activePage}
+              </WizardContext.Provider>
+              <div className="buttons">
+                {page > 0 && (
+                  <Button type="button" onClick={this.previous}>
+                    « Previous
+                  </Button>
+                )}
+                {!isLastPage && <Button type="submit">Next »</Button>}
+                {isLastPage && (
+                  <Button type="submit" disabled={submitting}>
+                    Submit
+                  </Button>
+                )}
+              </div>
+              {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
+            </form>
+          </>
         )}
       </Form>
     )
