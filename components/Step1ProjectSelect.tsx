@@ -27,7 +27,10 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
     }
 
     const filterProjectsBySearch = (searchQuery: string) => {
-        const updatedGuidance = guidance.filter(item => item.Title.includes(searchQuery));
+        const updatedGuidance = guidance.filter(item => {
+            const itemTitle = item.Title.toLowerCase();
+            return itemTitle.includes(searchQuery.toLowerCase());
+        });
         setProjects(updatedGuidance);
     };
 
