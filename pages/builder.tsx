@@ -50,7 +50,9 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
         }
 
         return errors;
-    };    
+    };
+
+    const preselectedIds = Array.isArray(router.query.select) ? router.query.select.map(item => item.toUpperCase()) : typeof(router.query.select) !== "undefined" ? [router.query.select.toUpperCase()] : null; 
 
     return (
         <Layout>
@@ -60,8 +62,8 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
                 {/*
                 // @ts-ignore */}
                 <Wizard.Page validate={(values) => validateCheckbox(values)} >
-                    <Step1ProjectSelect guidance={guidance} preselectedIds={router.query.select} />
                     <ErrorMessage name="projectSelect" message="This is required"></ErrorMessage>                    
+                    <Step1ProjectSelect guidance={guidance} preselectedIds={preselectedIds} />
                 </Wizard.Page>
                 <Wizard.Page>
                     <Step2UserDetails/>
