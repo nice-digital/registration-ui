@@ -64,7 +64,7 @@ export default function Registrations({registrations} : {registrations: Array<Re
                         <tr key={registration.id}>
                             <td>{registration.dateSubmitted}</td>
                             <td>{registration.projectID}</td>
-                            <td><a target="_blank" href={`https://www.nice.org.uk/guidance/indevelopment/${registration.projectID}`}>{registration.title}</a></td>
+                            <td><a target="_blank" rel="noreferrer" href={`https://www.nice.org.uk/guidance/indevelopment/${registration.projectID}`}>{registration.title}</a></td>
                             <td>{registration.productTypeName}</td>
                             <td>{registration.status}</td>
                             <td>{registration.nextPhase}</td>
