@@ -78,7 +78,7 @@ export default function Registrations({registrations} : {registrations: Array<Re
                 </tbody>
             </Table>
             <Link href="/builder">
-                <button className="btn btn--cta">New registration</button>
+                <a className="btn btn--cta">New registration</a>
             </Link>
         </Layout>
     );
