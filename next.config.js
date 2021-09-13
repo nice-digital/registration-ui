@@ -27,7 +27,8 @@ const nextConfig = {
     AUTH0_POST_LOGOUT_REDIRECT: process.env.AUTH0_POST_LOGOUT_REDIRECT,
     APIGatewayAddress: process.env.APIGatewayAddress,
     SELF_URL: process.env.SELF_URL,
-    BACKEND_URL: process.env.BACKEND_URL
+    BACKEND_URL: process.env.BACKEND_URL,
+    INDEV_URL: process.env.INDEV_URL
   }
 };
 

@@ -13,8 +13,27 @@ import { fetchData } from "../lib/helpers";
 
   export const getServerSideProps = withPageAuthRequired({
       async getServerSideProps(context){
+
+        const registrations = await fetchData('/api/getRegistrations', { Cookie: context.req.headers.cookie});
+
+        for (const registration of registrations){ //TODO: this hits indev once per project. that's way too much. we need a single endpoint created for the real site.
+
+            const project = await fetchData(`${process.env.INDEV_URL}${registration.projectID}`, {Accept: 'application/json' });
+
+            const timelineList = project._embedded["nice.indev:timeline-list"];
+            if (typeof(timelineList) !== "undefined"){
+                const timeline = timelineList._embedded["nice.indev:timeline"]
+                if (typeof(timeline) !== "undefined"){
+                    const latestTimelineItem = timeline[0];
+                    if (typeof(latestTimelineItem) !== "undefined"){
+                        registration.nextPhase = `${latestTimelineItem.Column2} ${latestTimelineItem.Column1}`;
+                    }
+                }                
+            }
+        }
+
         return {
-            props: { registrations: await fetchData('/api/getRegistrations', { Cookie: context.req.headers.cookie})}
+            props: { registrations: registrations}
         }
       }
   });
@@ -36,6 +55,7 @@ export default function Registrations({registrations} : {registrations: Array<Re
                         <th>Topic / project</th>
                         <th>Programme</th>
                         <th>Status</th>
+                        <th>Next phase</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -44,9 +64,10 @@ export default function Registrations({registrations} : {registrations: Array<Re
                         <tr key={registration.id}>
                             <td>{registration.dateSubmitted}</td>
                             <td>{registration.projectID}</td>
-                            <td>{registration.title}</td>
+                            <td><a target="_blank" href={`https://www.nice.org.uk/guidance/indevelopment/${registration.projectID}`}>{registration.title}</a></td>
                             <td>{registration.productTypeName}</td>
                             <td>{registration.status}</td>
+                            <td>{registration.nextPhase}</td>
                             <td>{registration.status === "Pending" ? (
                                 <Button onClick={() => handleCancelClick(registration.id)}>Cancel request</Button>
                             ) : registration.status === "Rejected" ? (
