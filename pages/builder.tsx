@@ -11,6 +11,7 @@ import { Field } from 'react-final-form'
 import Step1ProjectSelect from "../components/Step1ProjectSelect";
 import Step2UserDetails from "../components/Step2UserDetails";
 import Step3ReviewAndSubmit from "../components/Step3ReviewAndSubmit";
+import { ErrorMessage } from "../components/ErrorMessage";
 
 
 
@@ -39,16 +40,6 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
         router.push('/confirmation');
     }    
 
-    const Error = ({ name }: any) => (
-        <Field
-            name={name}
-            subscription={{ touched: true, error: true }}
-            render={({ meta: { touched, error } }) =>
-            touched && error ? <span>{error}</span> : null
-            }
-        />
-    );
-
     const validateCheckbox = (values: any) => {
         const errors: any = {};
         const allDeselected = (!(Object.values(values).some(item => item === true)));
@@ -69,8 +60,8 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
                 {/*
                 // @ts-ignore */}
                 <Wizard.Page validate={(values) => validateCheckbox(values)} >
-                    <Error name="projectSelect" />
                     <Step1ProjectSelect guidance={guidance} preselectedIds={router.query.select} />
+                    <ErrorMessage name="projectSelect" message="This is required"></ErrorMessage>                    
                 </Wizard.Page>
                 <Wizard.Page>
                     <Step2UserDetails/>
