@@ -23,7 +23,7 @@ export const config: WebdriverIO.Config = {
 
 	logLevel: "error",
 
-	baseUrl: "http://test.nice.org.uk/",
+	baseUrl: "http://localhost:3000",
 	reporters: [
 		"spec",
 		isTeamCity && "teamcity",
