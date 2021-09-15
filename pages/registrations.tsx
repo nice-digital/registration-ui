@@ -39,47 +39,47 @@ import { fetchData } from "../lib/helpers";
   });
 
 export default function Registrations({registrations} : {registrations: Array<Registration>}) {
-
-    const handleCancelClick = (id: number) => {
-        console.log(id);
-    };
-
     return (
         <Layout>
-            <PageHeader heading="My registrations" />
+            <PageHeader heading="Registrations" />
+            <h2 className="h3">My guidance projects</h2>
+            <p className="mb--0">All guidance projects I registered for</p>
+            <p className="text-right mv--0">
+                <Link href="/builder">
+                    {/* <Button /> */}
+                    <a className="btn btn--cta mh--0">Add new guidance project</a>
+                </Link>
+            </p>            
             <Table>
                 <thead>
                     <tr>
                         <th>Date submitted &#x25be;</th>
-                        <th>Id</th>
                         <th>Topic / project</th>
-                        <th>Programme</th>
-                        <th>Status</th>
+                        <th>Registration status</th>
                         <th>Next phase</th>
-                        <th></th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {registrations && Array.isArray(registrations) && registrations.map((registration: Registration) => (
-                        <tr key={registration.id}>
-                            <td>{registration.dateSubmitted}</td>
-                            <td>{registration.projectID}</td>
-                            <td><a target="_blank" rel="noreferrer" href={`https://www.nice.org.uk/guidance/indevelopment/${registration.projectID}`}>{registration.title}</a></td>
-                            <td>{registration.productTypeName}</td>
-                            <td>{registration.status}</td>
-                            <td>{registration.nextPhase}</td>
-                            <td>{registration.status === "Pending" ? (
-                                <Button onClick={() => handleCancelClick(registration.id)}>Cancel request</Button>
-                            ) : registration.status === "Rejected" ? (
-                                <Button>Contact NICE about this request</Button>
-                            ) : null}</td>
-                        </tr>
-                    ))}
+                    {registrations && Array.isArray(registrations) && registrations.map((registration: Registration) => {
+                        const guidanceLink = `https://www.nice.org.uk/guidance/indevelopment/${registration.projectID}`;
+
+                        return (
+                            <tr key={registration.id}>
+                                <td>{registration.dateSubmitted}</td>
+                                <td><a target="_blank" rel="noreferrer" href={guidanceLink}>{registration.title}</a></td>
+                                <td>{registration.status}</td>
+                                <td>{registration.nextPhase}</td>
+                                <td>
+                                    <a target="_blank" rel="noreferrer" href={guidanceLink}>Cancel registration</a> | <a target="_blank" rel="noreferrer" href={guidanceLink}>Contact NICE</a>
+                                </td>
+                                {/* <td>{registration.projectID}</td> */}
+                                {/* <td>{registration.productTypeName}</td> */}
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </Table>
-            <Link href="/builder">
-                <a className="btn btn--cta">New registration</a>
-            </Link>
         </Layout>
     );
 }
