@@ -21,6 +21,11 @@ frontend:
     paths:
       - node_modules/**/*
 test:
+  artifacts:
+    baseDirectory: functional-tests
+    configFilePath: '**/wdio.conf.js'
+    files:
+      - '**/*'
   phases:
     preTest:
       commands:
