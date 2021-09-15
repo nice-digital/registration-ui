@@ -4,7 +4,8 @@ export type Registration = {
 	projectID: string,
 	productTypeName: string,
 	dateSubmitted: string,
-	status: string
+	status: string,
+	nextPhase?: string
 };
 
 export type UserProfile = {
