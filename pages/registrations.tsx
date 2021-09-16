@@ -1,5 +1,7 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Link from "next/link";
+import moment, { defaultFormat } from "moment";
+
 
 import Layout from '../components/layout';
 
@@ -46,7 +48,6 @@ export default function Registrations({registrations} : {registrations: Array<Re
             <p className="mb--0">All guidance projects I registered for</p>
             <p className="text-right mv--0">
                 <Link href="/builder">
-                    {/* <Button /> */}
                     <a className="btn btn--cta mh--0">Add new guidance project</a>
                 </Link>
             </p>            
@@ -64,9 +65,12 @@ export default function Registrations({registrations} : {registrations: Array<Re
                     {registrations && Array.isArray(registrations) && registrations.map((registration: Registration) => {
                         const guidanceLink = `https://www.nice.org.uk/guidance/indevelopment/${registration.projectID}`;
 
+                        
+                        const dateSubmitted = moment(registration.dateSubmitted, moment.defaultFormat = "DD/MM/YYYY HH:mm").format("D MMMM, YYYY");
+
                         return (
                             <tr key={registration.id}>
-                                <td>{registration.dateSubmitted}</td>
+                                <td>{dateSubmitted}</td>
                                 <td><a target="_blank" rel="noreferrer" href={guidanceLink}>{registration.title}</a></td>
                                 <td>{registration.status}</td>
                                 <td>{registration.nextPhase}</td>
