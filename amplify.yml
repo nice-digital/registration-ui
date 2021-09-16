@@ -25,7 +25,8 @@ test:
     preTest:
       commands:
         - cd functional-tests
-        - npm i
+        - npm ci
+        - 'npx wait-on http://localhost:3000'
     test:
       commands:
-        - npm test
+        - 'npx wdio run wdio.conf.js'
