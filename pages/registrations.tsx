@@ -7,7 +7,6 @@ import Layout from '../components/layout';
 
 import { PageHeader } from "@nice-digital/nds-page-header";
 import { Table } from "@nice-digital/nds-table";
-import { Button } from "@nice-digital/nds-button";
 
 import { Registration } from "../lib/types";
 
