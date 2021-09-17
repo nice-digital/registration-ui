@@ -26,7 +26,6 @@ test:
       commands:
         - cd functional-tests
         - npm i
-        - npx wait-on http://localhost:3000
     test:
       commands:
         - npx wdio run wdio.conf.js
