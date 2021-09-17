@@ -25,6 +25,15 @@ test:
     preTest:
       commands:
         - npm i
+        - npm install wait-on
+        - npm install pm2
+        - npm install @wdio/allure-reporter
+        - npx pm2 start npm -- start
+        - 'npx wait-on http://localhost:3000'
     test:
       commands:
         - npx wdio run wdio.conf.js
+    postTest:
+      commands:
+        - npx allure generate --clean
+        - npx pm2 kill
