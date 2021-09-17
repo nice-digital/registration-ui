@@ -12,9 +12,9 @@
   },
   "files.eol": "\n",
   "cucumberautocomplete.steps": [
-    "node_modules/@nice-digital/wdio-cucumber-steps/lib/given/definitions.js",
-    "node_modules/@nice-digital/wdio-cucumber-steps/lib/when/definitions.js",
-    "node_modules/@nice-digital/wdio-cucumber-steps/lib/then/definitions.js",
+    "../node_modules/@nice-digital/wdio-cucumber-steps/lib/given/definitions.js",
+    "../node_modules/@nice-digital/wdio-cucumber-steps/lib/when/definitions.js",
+    "../node_modules/@nice-digital/wdio-cucumber-steps/lib/then/definitions.js",
     "./steps/**/*.ts"
   ],
   "cucumberautocomplete.customParameters": [

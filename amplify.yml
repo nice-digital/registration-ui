@@ -24,7 +24,6 @@ test:
   phases:
     preTest:
       commands:
-        - cd functional-tests
         - npm i
     test:
       commands:
