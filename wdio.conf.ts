@@ -23,7 +23,7 @@ export const config: WebdriverIO.Config = {
 
   logLevel: 'error',
 
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://test.nice.org.uk/',
   reporters: [
     'spec',
     isTeamCity && 'teamcity',
@@ -47,10 +47,10 @@ export const config: WebdriverIO.Config = {
     timeout: 15000,
   },
 
-  afterStep: async function (_test, _scenario, { error }) {
-    // Take screenshots on error, these end up in the Allure reports
-    if (error) await browser.takeScreenshot();
-  },
+  // afterStep: async function (_test, _scenario, { error }) {
+  //   // Take screenshots on error, these end up in the Allure reports
+  //   if (error) await browser.takeScreenshot();
+  // },
 
   autoCompileOpts: {
     autoCompile: true,
