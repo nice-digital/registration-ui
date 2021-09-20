@@ -27,7 +27,6 @@ test:
         - npm i
         - npm install wait-on
         - npm install pm2
-        - npm install @wdio/allure-reporter
         - npx pm2 start npm -- start
         - 'npx wait-on http://localhost:3000'
     test:
