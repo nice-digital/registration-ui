@@ -35,3 +35,9 @@ test:
       commands:
         - npx allure generate --clean
         - npx pm2 kill
+    artifacts:
+    baseDirectory: allure-results
+    configFilePath: '**/mochawesome.json'
+    files:
+      - '**/*.png'
+      - '**/*.mp4'

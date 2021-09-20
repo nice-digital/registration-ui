@@ -1,13 +1,12 @@
-const isInDocker = !!process.env.IN_DOCKER,
-  isTeamCity = !!process.env.TEAMCITY_VERSION;
+const allure = require('allure-commandline');
 
 export const config: WebdriverIO.Config = {
   // Use devtools to control Chrome when we're running tests locally
   // Avoids issues with having the wrong ChromeDriver installed via selenium-standalone when Chrome updates every 6 weeks.
   // We need to use webdriver protocol in Docker because we use the selenium grid.
-  automationProtocol: isInDocker ? 'webdriver' : 'devtools',
+  automationProtocol: 'devtools',
 
-  maxInstances: isInDocker ? 5 : 1,
+  maxInstances: 1,
   path: '/wd/hub',
 
   specs: ['./functional-tests/features/**/*.feature'],
@@ -16,7 +15,7 @@ export const config: WebdriverIO.Config = {
     {
       browserName: 'chrome',
       'goog:chromeOptions': {
-        args: ['--window-size=1366,768'].concat(isInDocker ? '--headless' : []),
+        args: ['--window-size=1366,768', '--headless'],
       },
     },
   ],
@@ -26,8 +25,7 @@ export const config: WebdriverIO.Config = {
   baseUrl: 'https://test.nice.org.uk/',
   reporters: [
     'spec',
-    isTeamCity && 'teamcity',
-    isInDocker && [
+    [
       'allure',
       {
         useCucumberStepReporter: true,
@@ -60,5 +58,23 @@ export const config: WebdriverIO.Config = {
       transpileOnly: true,
       project: 'tsconfig.json',
     },
+  },
+  onComplete: function () {
+    const reportError = new Error('Could not generate Allure report');
+    const generation = allure(['generate', 'allure-results', '--clean']);
+    return new Promise<void>((resolve, reject) => {
+      const generationTimeout = setTimeout(() => reject(reportError), 5000);
+
+      generation.on('exit', function (exitCode: number) {
+        clearTimeout(generationTimeout);
+
+        if (exitCode !== 0) {
+          return reject(reportError);
+        }
+
+        console.log('Allure report successfully generated');
+        resolve();
+      });
+    });
   },
 };
