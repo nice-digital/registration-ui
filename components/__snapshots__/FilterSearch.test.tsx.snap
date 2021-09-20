@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterSearch should match snapshot for main content 1`] = `
+<body>
+  <div>
+    <div
+      class="panel"
+    >
+      <div
+        class="input"
+      >
+        <label
+          class="input__label"
+          for="filter-search"
+        >
+          Filter by topic name
+        </label>
+        <input
+          autocomplete="off"
+          class="input__input"
+          data-qa-sel="filter-search-input"
+          id="filter-search"
+          name="filter-search"
+          type="search"
+          unique="filterSearch"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</body>
+`;
