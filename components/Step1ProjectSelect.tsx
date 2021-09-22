@@ -41,7 +41,7 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
         setSelected(updatedSelected);
     };
     
-    const [projects, setProjects] = useState<Array<ProjectType>>(guidance);
+    const [projects, setProjects] = useState<Array<ProjectType>>(guidance.sort((a, b) => (a.Title > b.Title ? 1 : -1)));
     const [selected, setSelected] = useState<Array<ProjectType>>(preselectedProjects);
 
     return (

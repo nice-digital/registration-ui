@@ -31,6 +31,7 @@
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
     "final-form": "^4.20.2",
+    "moment": "^2.29.1",
     "next": "11.0.1",
     "next-transpile-modules": "^8.0.0",
     "pm2": "^5.1.1",
