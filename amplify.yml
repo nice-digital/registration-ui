@@ -25,7 +25,6 @@ test:
     preTest:
       commands:
         - npm i
-        - npm run build
         - npm start
         - 'npx wait-on http://localhost:3000'
     test:
