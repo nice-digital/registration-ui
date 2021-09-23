@@ -24,10 +24,7 @@ test:
   phases:
     preTest:
       commands:
-        - docker ps -a
         - npm i
-        - npm run build
-        - npm run start
     test:
       commands:
         - npx wdio run wdio.conf.js
