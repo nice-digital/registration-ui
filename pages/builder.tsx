@@ -1,18 +1,16 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 import { fetchData, mungeFormValueData } from "../lib/helpers";
 import Layout from "../components/layout";
 import { ProjectType } from "../lib/types";
 
 import Wizard from '../components/Wizard';
-import { Field } from 'react-final-form'
 
 import Step1ProjectSelect from "../components/Step1ProjectSelect";
 import Step2UserDetails from "../components/Step2UserDetails";
 import Step3ReviewAndSubmit from "../components/Step3ReviewAndSubmit";
 import { ErrorMessage } from "../components/ErrorMessage";
-
 
 
 export const getServerSideProps = withPageAuthRequired({
@@ -24,20 +22,18 @@ export const getServerSideProps = withPageAuthRequired({
 });
 
 export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
-    const router = useRouter()
+    const router = useRouter();
 
     const onSubmit = async (values : any) => {
-
-        //todo: munge the selected project Id's into an array.
         const mungedData = mungeFormValueData(values, guidance);
-
-        //window.alert(JSON.stringify(mungedData));
+        const mungedDataIds = mungedData.projects.map((item: any) => item.id);
 
         const response = await fetchData('/api/submitRegistration', {}, 'POST', JSON.stringify(mungedData));
 
-        console.log("response:" + response);
-
-        router.push('/confirmation');
+        router.push({
+            pathname: '/confirmation',
+            query: { select: mungedDataIds }
+        });
     }    
 
     const validateCheckbox = (values: any) => {
