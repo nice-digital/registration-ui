@@ -42,7 +42,7 @@ export default function Confirmation({ guidance }: {guidance: Array<ProjectType>
             ))}
             <hr />
             <h2 className="h3">What happens next?</h2>
-            <p>You can view your registration status, list of chosen topics and other details on your My registrations page.</p>
+            <p>We will now review your registration request, you can view your registration status, list of chosen topics and other details on your My registrations page.</p>
             <Link href="/registrations">
                 <a className="btn btn--cta mh--0">View My registrations</a>
             </Link>
