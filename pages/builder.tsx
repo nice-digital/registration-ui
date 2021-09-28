@@ -16,7 +16,7 @@ import Step4IndLocation from "../components/Step4IndLocation";
 import ExtraStepIndTobacco from "../components/ExtraStepIndTobacco";
 import Step5ReviewAndSubmit from "../components/Step5ReviewAndSubmit";
 import { ErrorMessage } from "../components/ErrorMessage";
-import React from "react";
+import React, { useState } from "react";
 import WizardContext from "../components/WizardContext";
 
 
@@ -31,6 +31,8 @@ export const getServerSideProps = withPageAuthRequired({
 export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
     const router = useRouter();
 
+    const [isOrganisation, setIsOrganisation] = useState<boolean | null>();
+    
     const onSubmit = async (values : any) => {
         const mungedData = mungeFormValueData(values, guidance);
         const mungedDataIds = mungedData.projects.map((item: any) => item.id);
@@ -57,8 +59,6 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
 
     const preselectedIds = Array.isArray(router.query.select) ? router.query.select.map(item => item.toUpperCase()) : typeof(router.query.select) !== "undefined" ? [router.query.select.toUpperCase()] : null; 
 
-    const isOrganisation = router.query.isOrg;
-
     return (
         <Layout>
             <Wizard
@@ -70,7 +70,9 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
                     <ErrorMessage name="projectSelect" message="This is required"></ErrorMessage>                    
                     <Step1ProjectSelect guidance={guidance} preselectedIds={preselectedIds} />
                 </Wizard.Page>
-                <Wizard.Page>
+                {/*
+                // @ts-ignore */}
+                <Wizard.Page validate={(values) => setIsOrganisation(values.registeringAs === "organisation")}>
                     <Step2Registration />
                 </Wizard.Page>
                 <Wizard.Page>
