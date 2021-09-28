@@ -25,6 +25,7 @@ test:
     preTest:
       commands:
         - npm i
+        - npx pm2 start npm -- start
     test:
       commands:
         - npx wdio run wdio.conf.js

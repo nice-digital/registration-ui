@@ -9,7 +9,7 @@ export const config: WebdriverIO.Config = {
   maxInstances: 1,
   path: '/wd/hub',
 
-  specs: ['./functional-tests/features/**/*.feature'],
+  specs: ['./functional-tests/features/**/login.feature'],
 
   capabilities: [
     {
@@ -22,7 +22,7 @@ export const config: WebdriverIO.Config = {
 
   logLevel: 'error',
 
-  baseUrl: 'https://sh-53-create-e2e-tests.d36975sqzx9ikk.amplifyapp.com',
+  baseUrl: 'http://localhost:3000',
   reporters: [
     'spec',
     [
