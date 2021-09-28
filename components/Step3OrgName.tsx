@@ -1,6 +1,6 @@
 import { Field } from 'react-final-form'
 
-export default function UserDetails() {
+export default function OrgName() {
 
     const Error = ({ name } : { name: string }) => (
         <Field
@@ -10,9 +10,9 @@ export default function UserDetails() {
             touched && error ? <span>{error}</span> : null
           }
         />
-      )
+    );
 
-    const required = (value : any) => (value ? undefined : 'Required')
+    const required = (value : any) => (value ? undefined : 'Required');
 
     return (
         <>

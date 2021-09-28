@@ -8,9 +8,16 @@ import { ProjectType } from "../lib/types";
 import Wizard from '../components/Wizard';
 
 import Step1ProjectSelect from "../components/Step1ProjectSelect";
-import Step2UserDetails from "../components/Step2UserDetails";
-import Step3ReviewAndSubmit from "../components/Step3ReviewAndSubmit";
+import Step2Registration from "../components/Step2Registration";
+import Step3OrgName from "../components/Step3OrgName";
+import Step3IndRole from "../components/Step3IndRole";
+import Step4OrgType from "../components/Step4OrgType";
+import Step4IndLocation from "../components/Step4IndLocation";
+import ExtraStepIndTobacco from "../components/ExtraStepIndTobacco";
+import Step5ReviewAndSubmit from "../components/Step5ReviewAndSubmit";
 import { ErrorMessage } from "../components/ErrorMessage";
+import React, { useState } from "react";
+import WizardContext from "../components/WizardContext";
 
 
 export const getServerSideProps = withPageAuthRequired({
@@ -24,6 +31,8 @@ export const getServerSideProps = withPageAuthRequired({
 export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
     const router = useRouter();
 
+    const [isOrganisation, setIsOrganisation] = useState<boolean | null>();
+    
     const onSubmit = async (values : any) => {
         const mungedData = mungeFormValueData(values, guidance);
         const mungedDataIds = mungedData.projects.map((item: any) => item.id);
@@ -61,11 +70,32 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
                     <ErrorMessage name="projectSelect" message="This is required"></ErrorMessage>                    
                     <Step1ProjectSelect guidance={guidance} preselectedIds={preselectedIds} />
                 </Wizard.Page>
-                <Wizard.Page>
-                    <Step2UserDetails/>
+                {/*
+                // @ts-ignore */}
+                <Wizard.Page validate={(values) => setIsOrganisation(values.registeringAs === "organisation")}>
+                    <Step2Registration />
                 </Wizard.Page>
                 <Wizard.Page>
-                    <Step3ReviewAndSubmit guidance={guidance}/>
+                    {isOrganisation ? (
+                        <Step3OrgName />
+                    ) : (
+                        <Step3IndRole />
+                    )}
+                </Wizard.Page>
+                <Wizard.Page>
+                    {isOrganisation ? (
+                        <Step4OrgType />
+                    ) : (
+                        <Step4IndLocation />
+                    )}
+                </Wizard.Page>
+                {!isOrganisation && (
+                    <Wizard.Page>
+                        <ExtraStepIndTobacco />
+                    </Wizard.Page>
+                )}
+                <Wizard.Page>
+                    <Step5ReviewAndSubmit guidance={guidance}/>
                 </Wizard.Page>
             </Wizard>
         </Layout>
