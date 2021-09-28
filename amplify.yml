@@ -28,7 +28,7 @@ test:
         - npx pm2 start npm -- start
     test:
       commands:
-        - npx wdio run wdio.conf.js
+        - npm test
     postTest:
       commands:
         - npx allure generate --clean
