@@ -29,7 +29,7 @@ export const config: WebdriverIO.Config = {
 
   logLevel: 'error',
 
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://sh-53-create-e2e-tests.d36975sqzx9ikk.amplifyapp.com/',
   reporters: [
     'spec',
     [
