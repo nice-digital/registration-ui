@@ -4,8 +4,8 @@ export const config: WebdriverIO.Config = {
   // Use devtools to control Chrome when we're running tests locally
   // Avoids issues with having the wrong ChromeDriver installed via selenium-standalone when Chrome updates every 6 weeks.
   // We need to use webdriver protocol in Docker because we use the selenium grid.
-  automationProtocol: 'devtools',
-
+  automationProtocol: 'webdriver',
+  services: ['selenium-standalone'],
   maxInstances: 1,
   path: '/wd/hub',
 
