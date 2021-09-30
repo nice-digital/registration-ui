@@ -1,0 +1,41 @@
+version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - '# Execute Amplify CLI with the helper script'
+        - amplifyPush --simple
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+test:
+  phases:
+    preTest:
+      commands:
+        - npm i
+        - npx pm2 start npm -- start
+    test:
+      commands:
+        - npm test
+    postTest:
+      commands:
+        - npx allure generate --clean
+        - npx pm2 kill
+    artifacts:
+    baseDirectory: allure-results
+    configFilePath: '**/mochawesome.json'
+    files:
+      - '**/*.png'
+      - '**/*.mp4'
