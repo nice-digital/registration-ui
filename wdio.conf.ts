@@ -29,7 +29,7 @@ export const config: WebdriverIO.Config = {
 
   logLevel: 'error',
 
-  baseUrl: 'http://localhost:8000/',
+  baseUrl: 'http://localhost/',
   reporters: [
     'spec',
     [
