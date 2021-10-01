@@ -1,4 +1,6 @@
-import { Field } from 'react-final-form'
+import { Field } from "react-final-form";
+
+import { PageHeader } from "@nice-digital/nds-page-header";
 
 export default function Registration() {
 
@@ -16,28 +18,40 @@ export default function Registration() {
 
     return (
         <>
-            <h3>To help determine eligibility please confirm the following:</h3>            
-            <div>
-                <label>
+            <PageHeader heading="Registration" />
+            <h2 className="h3">To help determine eligibility please confirm the following:</h2>
+            <div className="input">
+                <label className="input__label" htmlFor="registeringAs"></label>
+                <Error name="registeringAs" />				
+                <div className="radio">
                     <Field
                         name="registeringAs"
                         component="input"
                         type="radio"
                         value="organisation"
-                    />{' '}
-                    Registering as organisation representative
-                </label>
-            </div>
-            <div>
-                <label>
+                        className="radio__input"
+                        id="registeringAsOrganisation"
+                        validate={required}
+                    />
+                    <label className="radio__label" htmlFor="registeringAsOrganisation">
+                        Registering as organisation representative
+                    </label>
+                </div>
+
+                <div className="radio">
                     <Field
                         name="registeringAs"
                         component="input"
                         type="radio"
                         value="individual"
-                    />{' '}
-                    Registering as individual
-                </label>
+                        className="radio__input"
+                        id="registeringAsIndividual"
+                        validate={required}
+                    />
+                    <label className="radio__label" htmlFor="registeringAsIndividual">
+                        Registering as individual
+                    </label>
+                </div>				
             </div>
         </>
     );
