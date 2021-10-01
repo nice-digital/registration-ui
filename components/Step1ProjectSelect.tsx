@@ -14,7 +14,7 @@ import FilterSearch from "./FilterSearch";
 
 export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: Array<string> | null}) {    
     //boosting the preselected guidance to the top of the page.
-    let preselectedProjects= [] as Array<ProjectType> ;
+    let preselectedProjects = [] as Array<ProjectType>;
 
     if (preselectedIds){ //currently just handling a single preselected project. todo: (in next phase) handle more.
         const foundProjects = guidance.filter(elem => preselectedIds.includes(elem.Reference));
@@ -41,7 +41,7 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
         setSelected(updatedSelected);
     };
     
-    const [projects, setProjects] = useState<Array<ProjectType>>(guidance);
+    const [projects, setProjects] = useState<Array<ProjectType>>(guidance.sort((a, b) => (a.Title.toLowerCase() > b.Title.toLowerCase() ? 1 : -1)));
     const [selected, setSelected] = useState<Array<ProjectType>>(preselectedProjects);
 
     return (
@@ -58,7 +58,7 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
                     </GridItem>
                 ) : null}
                 <GridItem cols={12}>
-                    <h2 className="h3">Related guidance</h2>                    
+                    <h2 className="h3">Find guidance</h2>                    
                     <p style={{ maxWidth: "100%" }}>Build your profile by selecting guidance which is most relevant to you. You can also be alerted on any relevant and upcoming guidance and advice for a specific topic by adding this as an &apos;Interest&apos;.</p>
                 </GridItem>
                 <GridItem cols={12} md={3}>
@@ -75,7 +75,7 @@ export default function BuilderSelect({guidance, preselectedIds} : {guidance: Ar
     );
 }
 
-const Guideline = ({ data, checked, onCheckboxChange }: { data: ProjectType, checked?: boolean, onCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
+export const Guideline = ({ data, checked, onCheckboxChange, hideCheckboxes }: { data: ProjectType, checked?: boolean, onCheckboxChange?: (e: React.ChangeEvent<HTMLInputElement>) => void, hideCheckboxes?: boolean }) => {
     let formattedDate = "";
     if (data.PublishedDate !== null){
         const parsedDate = new Date(data.PublishedDate);
@@ -84,9 +84,7 @@ const Guideline = ({ data, checked, onCheckboxChange }: { data: ProjectType, che
 
     const guidelineLink = {
         link: {
-            elementType: Link,
-            destination: `/project/${data.Reference}`,
-            method: "href"
+            destination: `https://www.nice.org.uk/guidance/indevelopment/${data.Reference}`,
         },
     };
 
@@ -113,27 +111,29 @@ const Guideline = ({ data, checked, onCheckboxChange }: { data: ProjectType, che
 
     return (
         <div className={styles.projectContainer}>
-            <div className={styles.projectCheckbox}>                
-               <Field name={reference} type="checkbox" initialValue={checked} inputOnChange={onCheckboxChange}>
-                    {({ input, inputOnChange }) => {
-                        return (
-                            <div className="checkbox">
-                                <input
-                                    type="checkbox"
-                                    className="checkbox__input"
-                                    name={input.name}
-                                    checked={input.checked}
-                                    onChange={e => {
-                                        input.onChange(e);
-                                        inputOnChange && inputOnChange(e);
-                                    }}
-                                />
-                                <label className="checkbox__label" htmlFor={input.name}>&nbsp;</label>
-                            </div>
-                        );
-                    }}
-                </Field>
-            </div>
+            {!hideCheckboxes && (
+                <div className={styles.projectCheckbox}>                
+                    <Field name={reference} type="checkbox" initialValue={checked} inputOnChange={onCheckboxChange}>
+                        {({ input, inputOnChange }) => {
+                            return (
+                                <div className="checkbox">
+                                    <input
+                                        type="checkbox"
+                                        className="checkbox__input"
+                                        name={input.name}
+                                        checked={input.checked}
+                                        onChange={e => {
+                                            input.onChange(e);
+                                            inputOnChange && inputOnChange(e);
+                                        }}
+                                    />
+                                    <label className="checkbox__label" htmlFor={input.name}>&nbsp;</label>
+                                </div>
+                            );
+                        }}
+                    </Field>
+                </div>
+            )}            
             <div className={styles.projectCard}>
                 <Card {...guidelineLink} headingText={data.Title} metadata={guidelineMetadata} />
             </div>

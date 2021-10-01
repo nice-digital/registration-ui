@@ -1,6 +1,6 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import Link from "next/link";
-import moment, { defaultFormat } from "moment";
+import moment from "moment";
 
 
 import Layout from '../components/layout';

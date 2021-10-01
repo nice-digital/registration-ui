@@ -7,9 +7,7 @@ import { ProjectType } from "../lib/types";
 //export default function BuilderSelect({guidance, preselectedIds} : {guidance: Array<ProjectType>, preselectedIds: string | Array<string> | undefined}) {
 export default function ReviewAndSubmit({guidance} : {guidance: Array<ProjectType>}) {
 
-    let value = React.useContext(WizardContext);  
-
-
+    let value = React.useContext(WizardContext); 
 
     //console.log("value from use context:" + JSON.stringify(value));
 
