@@ -12,9 +12,9 @@ describe("FilterSearch", () => {
 
 		render(<FilterSearch {...props} />);
 
-		const heading = screen.getByText("Something that isn't the correct label", {
+		const heading = screen.getByText("Filter by topic name", {
 			selector: ".input__label",
-		})
+		});
 
 		expect(heading).toBeInTheDocument();
 	});
