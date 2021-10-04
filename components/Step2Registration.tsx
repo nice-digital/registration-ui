@@ -9,7 +9,7 @@ export default function Registration() {
           name={name}
           subscription={{ touched: true, error: true }}
           render={({ meta: { touched, error } }) =>
-            touched && error ? <span>{error}</span> : null
+            touched && error ? <p className="input__error">{error}</p> : null
           }
         />
     );
@@ -19,9 +19,8 @@ export default function Registration() {
     return (
         <>
             <PageHeader heading="Registration" />
-            <h2 className="h3">To help determine eligibility please confirm the following:</h2>
             <div className="input">
-                <label className="input__label" htmlFor="registeringAs"></label>
+                <label className="input__label" htmlFor="registeringAs">To help determine eligibility please confirm the following:</label>
                 <Error name="registeringAs" />				
                 <div className="radio">
                     <Field

@@ -57,18 +57,6 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
         return errors;
     };
 
-    const validateIsOrg = (registeringAs: any) => {
-        const errors: any = {};
-        
-        if (registeringAs) {
-            setIsOrganisation(registeringAs === "organisation");
-        } else {
-            errors["registeringAs"] = "Required";
-        }
-        
-        return errors;
-    };
-
     const preselectedIds = Array.isArray(router.query.select) ? router.query.select.map(item => item.toUpperCase()) : typeof(router.query.select) !== "undefined" ? [router.query.select.toUpperCase()] : null; 
 
     return (
@@ -82,10 +70,7 @@ export default function Builder({guidance} : {guidance: Array<ProjectType>}) {
                     <ErrorMessage name="projectSelect" message="This is required"></ErrorMessage>
                     <Step1ProjectSelect guidance={guidance} preselectedIds={preselectedIds} />
                 </Wizard.Page>
-                {/*
-                // @ts-ignore */}
-                <Wizard.Page validate={(values) => validateIsOrg(values?.registeringAs)}>
-                    <ErrorMessage name="registeringAs" message="This is required"></ErrorMessage>
+                <Wizard.Page>
                     <Step2Registration />
                 </Wizard.Page>
                 <Wizard.Page>

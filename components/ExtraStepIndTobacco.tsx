@@ -6,15 +6,15 @@ export default function ExtraStepIndTobacco() {
 
     const Error = ({ name } : { name: string }) => (
         <Field
-          name={name}
-          subscription={{ touched: true, error: true }}
-          render={({ meta: { touched, error } }) =>
-            touched && error ? <p className="input__error">{error}</p> : null
-          }
+        	name={name} 
+        	subscription={{ touched: true, error: true }} 
+        	render={({ meta: { touched, error } }) =>
+            	touched && error ? <p className="input__error">{error}</p> : null
+          	}
         />
     );
 
-    const required = (value : any) => (value ? undefined : 'Required');
+    const required = (value : any) => (value ? undefined : "Required");
 
     return (
         <>
