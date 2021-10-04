@@ -1,6 +1,22 @@
 import { Field } from 'react-final-form'
+import { PageHeader } from "@nice-digital/nds-page-header";
 
-export default function OrgName() {
+import { fetchData } from "../lib/helpers";
+import { Registration } from "../lib/types";
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+
+export const getServerSideProps = withPageAuthRequired({
+    async getServerSideProps(context){
+
+      const registrations = await fetchData('/api/getRegistrations', { Cookie: context.req.headers.cookie});
+
+      return {
+          props: { registrations: registrations}
+      }
+    }
+});
+
+export default function OrgName({registrations} : {registrations: Array<Registration>}) {
 
     const Error = ({ name } : { name: string }) => (
         <Field
@@ -14,100 +30,27 @@ export default function OrgName() {
 
     const required = (value : any) => (value ? undefined : 'Required');
 
+    
+
     return (
         <>
-            <h3>To help determine eligibility please confirm the following:</h3>            
+
+{registrations && Array.isArray(registrations) && registrations.map((registration: Registration) => {
+<div>{registration.id}</div>
+})}
+        
+            <PageHeader heading="Registration" lead="To help determine eligibility please confirm the following:" />          
             <div>
-                <label>
-                    <Field
-                        name="registeringAs"
-                        component="input"
-                        type="radio"
-                        value="organisation"
-                    />{' '}
-                    Registering as organisation representative
-                </label>
-            </div>
-            <div>
-                <label>
-                    <Field
-                        name="registeringAs"
-                        component="input"
-                        type="radio"
-                        value="individual"
-                    />{' '}
-                    Registering as individual
-                </label>
-            </div>
-            <div>
-                <label>Organisation Name</label>
+                <div><label>Registering as organisation representative</label></div>
                 <Field
                     name="organisationName"
                     component="input"
                     type="text"
                     placeholder="Organisation name"
-                />
-                {/* <Error name="organisationName" /> */}
-            </div>
-            <div>
-                <label>Building and street</label>
-                <Field
-                    name="addressLine1"
-                    component="input"
-                    type="text"
                     validate={required}
                 />
-                <Error name="addressLine1" />
+                <div><Error name="organisationName" /></div>
             </div>
-            <div>
-                <Field
-                    name="addressLine2"
-                    component="input"
-                    type="text"
-                />
-                {/* <Error name="addressLine2" /> */}
-            </div>
-            <div>
-                <label>Town or city</label>
-                <Field
-                    name="townOrCity"
-                    component="input"
-                    type="text"
-                />
-                {/* <Error name="townOrCity" /> */}
-            </div>
-            <div>
-                <label>County</label>
-                <Field
-                    name="county"
-                    component="input"
-                    type="text"
-                />
-                {/* <Error name="county" /> */}
-            </div>
-            <div>
-                <label>Post code</label>
-                <Field
-                    name="postcode"
-                    component="input"
-                    type="text"
-                    validate={required}
-                />
-                <Error name="postcode" /> 
-            </div>
-            <div>
-                <label>Country</label>
-                <Field name="country" component="select" validate={required}>
-                    <option value=""></option>
-                    <option value="England">England</option>
-                    <option value="Scotland">Scotland</option>
-                    <option value="Wales">Wales</option>
-                    <option value="Northern Ireland">Northern Ireland</option>
-                    {/* TODO: add the proper list here. */}
-                </Field>
-                <Error name="country" />
-            </div>
-            {/* TODO: the other fields */}
         </>
     );
 }
