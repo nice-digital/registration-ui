@@ -24,11 +24,11 @@ test:
   phases:
     preTest:
       commands:
-        - npm i
-        - npx pm2 start npm -- start
+        - cd functional-tests
+        - service docker start
     test:
       commands:
-        - npm test
+        - docker-compose build && docker-compose up -d
     postTest:
       commands:
         - npx allure generate --clean
