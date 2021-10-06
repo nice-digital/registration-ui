@@ -25,7 +25,7 @@ test:
     preTest:
       commands:
         - cd functional-tests
-        - service docker start
+        - docker ps -a
     test:
       commands:
         - docker-compose build && docker-compose up -d
