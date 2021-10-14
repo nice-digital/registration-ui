@@ -17,6 +17,12 @@ Cypress.Commands.add('login', (email, password) => {
   cy.get('#password').type('C3lt1c67').should('have.value', 'C3lt1c67');
   cy.get('[data-qa-sel="login-button"]').click();
 });
+
+Cypress.Commands.add('logout', () => {
+  cy.get('#my-account-button').click();
+  cy.get('[href="/api/auth/logout"]', { timeout: 10000 }).should('be.visible');
+  cy.get('#my-account > li:nth-child(4) > a').click();
+});
 //
 //
 // -- This is a child command --
