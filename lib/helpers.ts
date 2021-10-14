@@ -2,10 +2,10 @@ import { ProjectType, BackendProjectType } from "./types";
 
 const dev = process.env.NODE_ENV !== 'production';
 
-export const server = dev ? 'http://localhost:3000' : process.env.SELF_URL;
+export const server = dev ? 'http://localhost:3000' : `https://${process.env.AWS_BRANCH}.d36975sqzx9ikk.amplifyapp.com/`;
 
 export const backend_url = process.env.BACKEND_URL || "https://localhost";
-export const self_url = process.env.SELF_URL || "http://localhost";
+export const self_url = dev ? 'http://localhost:3000' : process.env.AWS_BRANCH ? `https://${process.env.AWS_BRANCH}.d36975sqzx9ikk.amplifyapp.com/` : "http://localhost";
 
 export async function fetchData(url: string, headersForFetch: any, method: string = "GET", jsonDataToPost: string = "") {
     const headers = Object.assign({}, headersForFetch);
