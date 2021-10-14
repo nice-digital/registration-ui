@@ -12,9 +12,11 @@
 // -- This is a parent command --
 Cypress.Commands.add('login', (email, password) => {
   cy.get('#username')
-    .type('martingmeta20+1@gmail.com')
-    .should('have.value', 'martingmeta20+1@gmail.com');
-  cy.get('#password').type('C3lt1c67').should('have.value', 'C3lt1c67');
+    .type(Cypress.env('EMAIL1'))
+    .should('have.value', Cypress.env('EMAIL1'));
+  cy.get('#password')
+    .type(Cypress.env('PASSWORD1'))
+    .should('have.value', Cypress.env('PASSWORD1'));
   cy.get('[data-qa-sel="login-button"]').click();
 });
 
