@@ -60,3 +60,4 @@ amplifytools.xcconfig
 
 cypress/screenshots/
 cypress/videos
+mochawesome-report/

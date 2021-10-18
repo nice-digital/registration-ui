@@ -11,6 +11,7 @@
 //
 // -- This is a parent command --
 Cypress.Commands.add('login', (email, password) => {
+  cy.get('#username', { timeout: 10000 }).should('be.visible');
   cy.get('#username')
     .type(Cypress.env('EMAIL1'))
     .should('have.value', Cypress.env('EMAIL1'));

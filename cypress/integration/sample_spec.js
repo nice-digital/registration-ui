@@ -1,6 +1,7 @@
 beforeEach(function () {
   cy.clearCookies('appSession');
   cy.visit('/');
+  cy.get('a').contains('Register as a stakeholder').should('be.visible');
   cy.get('a').contains('Register as a stakeholder').click();
   cy.login();
   cy.reload();
