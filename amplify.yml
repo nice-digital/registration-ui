@@ -29,7 +29,6 @@ test:
         - npm install pm2
         - npx pm2 start npm -- start
         - 'npx wait-on http://localhost:3000'
-        - cd functional-tests
     test:
       commands:
         - npm i
