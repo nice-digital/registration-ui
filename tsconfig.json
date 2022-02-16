@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["node", "webdriverio/async", "@cucumber/cucumber"]
+    "types": ["node", "webdriverio/async", "@wdio/cucumber-framework"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Wizard.js"],
   "exclude": ["node_modules", "functional-tests"]

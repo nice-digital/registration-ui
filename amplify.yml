@@ -10,6 +10,8 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+        - yum install -y ./google-chrome-stable_current_*.rpm
     build:
       commands:
         - npm run build
@@ -24,15 +26,13 @@ test:
   phases:
     preTest:
       commands:
-        - npm ci
         - npm install wait-on
         - npm install pm2
         - npx pm2 start npm -- start
         - 'npx wait-on http://localhost:3000'
     test:
       commands:
-        - npm i
-        - npm run test
+        - npx wdio run wdio.conf.ts
     postTest:
       commands:
         - npx allure generate --clean
