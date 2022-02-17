@@ -26,8 +26,8 @@ test:
   phases:
     preTest:
       commands:
-        - npm install wait-on
-        - npm install pm2
+        - npm install -g wait-on
+        - npm install -g pm2
         - npx pm2 start npm -- start
         - 'npx wait-on http://localhost:3000'
     test:
