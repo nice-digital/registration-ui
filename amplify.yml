@@ -27,9 +27,8 @@ test:
     preTest:
       commands:
         - npm install -g wait-on
-        - npm install -g pm2
-        - npx pm2 start npm -- start
-        - 'npx wait-on http://localhost:3000'
+        - npm run start
+        - npx wait-on http://localhost:3000
     test:
       commands:
         - npx wdio run wdio.conf.ts
